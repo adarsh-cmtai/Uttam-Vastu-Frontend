@@ -38,12 +38,17 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
+  /* Original Project Variables */
   --primary-bg: #ffffff;
   --footer-bg: #1a2238;
   --heading-text: #212121;
   --body-text: #555555;
   --accent-hover: #d45a1a;
   --white: #ffffff;
+  
+  /* Added Font Variables for Next.js Font Optimization */
+  --font-lato: "Lato", sans-serif;
+  --font-philosopher: "Philosopher", serif;
 }
 
 .dark {
@@ -81,10 +86,9 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-@theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
-  --font-sans: "Lato", sans-serif;
-  --font-philosopher: "Philosopher", serif;
+@theme {
+  --font-sans: var(--font-lato);
+  --font-serif: var(--font-philosopher);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -121,6 +125,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Added custom colors to Tailwind theme */
+  --color-brand-orange: #f46f21;
+  --color-brand-blue: #1a2238;
 }
 
 @layer base {
@@ -129,6 +137,28 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-lato); /* Changed from --font-sans */
+  }
+}
+
+/* Custom Keyframes for Animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -139,7 +169,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Philosopher", serif;
+  font-family: var(--font-philosopher); /* Changed from hardcoded string */
   color: var(--heading-text);
 }
 
@@ -164,7 +194,7 @@ h5 {
 }
 
 p {
-  font-family: "Lato", sans-serif;
+  font-family: var(--font-lato); /* Changed from hardcoded string */
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--body-text);
@@ -210,25 +240,13 @@ p {
   padding: 4rem 0;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Animation Classes */
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
 }
 
-@keyframes countUp {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
 }
 
 .animate-fade-in-up {
@@ -237,4 +255,19 @@ p {
 
 .animate-count-up {
   animation: countUp 2s ease-out;
+}
+
+/* Additional Styles from Original Project */
+.as_banner_wrapper {
+  background-image: url('/IMAGES/xbanner_bg.jpg.pagespeed.ic.I8213s30lB.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.as_subheader_wrapper {
+  background-image: url('/IMAGES/xsubheader_bg.jpg.pagespeed.ic.vY_mSJo56u.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }

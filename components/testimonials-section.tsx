@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
 
   return (
-    <section className="py-20 bg-gray-50 as_section">
+    <section className="py-20 bg-black/10 as_section">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h1 className="mb-6">What My Clients Say</h1>
