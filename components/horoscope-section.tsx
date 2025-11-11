@@ -1,3 +1,7 @@
+"use client"
+
+import { motion, Variants } from "framer-motion"
+
 const zodiacSigns = [
   { name: "Aries", dates: "Mar 21 - Apr 19", symbol: "♈" },
   { name: "Taurus", dates: "Apr 20 - May 20", symbol: "♉" },
@@ -13,30 +17,66 @@ const zodiacSigns = [
   { name: "Pisces", dates: "Feb 19 - Mar 20", symbol: "♓" },
 ]
 
+const gridVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+}
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+}
+
 export default function HoroscopeSection() {
   return (
-    <section className="py-20 bg-black/10 as_section">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="mb-6">Horoscope Forecasts</h1>
-          <div className="as_separator"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed">
-            This week is a time for reflection and personal growth. Focus on nurturing your relationships, both at work
-            and at home, and take some time for self-care to recharge your energy. The planetary alignments favor
-            introspection and spiritual practices this week.
+    <section className="py-20 sm:py-28 bg-slate-50 as_section">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Horoscope Forecasts
+          </h1>
+          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+            This week is a time for reflection and personal growth. Focus on nurturing your relationships and take some
+            time for self-care to recharge your energy.
           </p>
         </div>
 
-        {/* Zodiac Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {zodiacSigns.map((sign) => (
-            <div key={sign.name} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition text-center">
-              <div className="text-4xl mb-3">{sign.symbol}</div>
-              <h4 className="font-bold mb-2">{sign.name}</h4>
-              <p className="text-xs text-gray-600">{sign.dates}</p>
-            </div>
+            <motion.a
+              key={sign.name}
+              href="#"
+              className="group bg-white p-6 rounded-xl border border-gray-200 text-center cursor-pointer shadow-sm transition-all duration-300 hover:border-orange-500 hover:shadow-lg"
+              variants={cardVariants}
+              whileHover={{ y: -5 }}
+            >
+              <div className="text-6xl mb-3 font-serif text-orange-500 transition-transform duration-300 group-hover:scale-110">
+                {sign.symbol}
+              </div>
+              <h4 className="font-bold text-lg text-gray-800 mb-1">{sign.name}</h4>
+              <p className="text-sm text-gray-500">{sign.dates}</p>
+            </motion.a>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

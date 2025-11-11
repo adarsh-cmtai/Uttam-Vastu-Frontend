@@ -40,7 +40,7 @@ export default function HeroSlider() {
   const currentSlide = sliderContent[current]
 
   return (
-    <section className="relative flex items-center bg-black/10 min-h-screen overflow-hidden py-20 lg:py-0">
+    <section className="relative flex items-center bg-white min-h-screen overflow-hidden py-20 lg:py-0">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           

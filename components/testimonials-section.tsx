@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 
 const testimonials = [
   {
@@ -35,54 +36,122 @@ const testimonials = [
   },
 ]
 
+const cardVariants: Variants = {
+  enter: {
+    opacity: 0,
+    y: 30,
+    scale: 0.98,
+  },
+  center: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+      staggerChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -30,
+    scale: 0.98,
+    transition: {
+      duration: 0.3,
+      ease: "easeIn",
+    },
+  },
+}
+
+const itemVariants: Variants = {
+  enter: { opacity: 0, y: 20 },
+  center: { opacity: 1, y: 0 },
+}
+
+const StarIcon = () => (
+  <svg className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+  </svg>
+)
+
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
 
   return (
-    <section className="py-20 bg-black/10 as_section">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <h1 className="mb-6">What My Clients Say</h1>
-          <div className="as_separator"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed">
-            Discover how my astrological readings have made a difference in the lives of my clients. Their feedback and
-            stories offer a glimpse into how astrology can provide practical insights and spiritual clarity.
+    <section className="py-20 sm:py-28 bg-gray-50 as_section">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Trusted by People Like You
+          </h1>
+          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+            Real stories from real clients. Discover how astrological guidance has provided clarity, direction, and
+            peace of mind in their lives.
           </p>
         </div>
 
-        {/* Testimonials Slider */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Left - Thumbnails */}
-          <div className="flex flex-col gap-4 md:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div className="flex flex-col gap-3 lg:col-span-4">
             {testimonials.map((testimonial, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrent(idx)}
-                className={`p-4 rounded-lg transition ${
-                  idx === current ? "bg-[#f46f21] text-white" : "bg-white text-[#212121] hover:bg-gray-100"
+                className={`w-full p-4 rounded-lg text-left transition-all duration-300 ease-in-out transform focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 ${
+                  idx === current
+                    ? "bg-white border-l-4 border-orange-500 shadow-lg scale-[1.03]"
+                    : "bg-transparent hover:bg-white hover:shadow-md border-l-4 border-transparent"
                 }`}
               >
-                <div className="text-sm font-bold text-left">{testimonial.name}</div>
+                <div className="flex items-center gap-4">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-gray-200"
+                  />
+                  <div>
+                    <h3 className="font-bold text-gray-800">{testimonial.name}</h3>
+                    <p className="text-sm text-gray-500">{testimonial.text.substring(0, 30)}...</p>
+                  </div>
+                </div>
               </button>
             ))}
           </div>
 
-          {/* Right - Current Testimonial */}
-          <div className="md:col-span-2 bg-white p-12 rounded-lg shadow-lg">
-            <div className="mb-6">
-              <img
-                src={testimonials[current].image || "/placeholder.svg"}
-                alt={testimonials[current].name}
-                className="w-20 h-20 rounded-full object-cover mb-4"
-              />
-              <h4 className="font-bold">{testimonials[current].name}</h4>
-            </div>
-            <p className="text-lg leading-relaxed italic text-gray-600">"{testimonials[current].text}"</p>
-            <div className="mt-6 flex gap-1">
-              {[...Array(5)].map((_, i) => (
-                <i key={i} className="fa fa-star text-[#f46f21]"></i>
-              ))}
-            </div>
+          <div className="lg:col-span-8 lg:sticky top-24">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current}
+                variants={cardVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="relative bg-white p-8 sm:p-10 rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
+              >
+                <motion.div variants={itemVariants} className="flex items-center gap-5 mb-5">
+                  <img
+                    src={testimonials[current].image}
+                    alt={testimonials[current].name}
+                    className="w-20 h-20 rounded-full object-cover border-4 border-gray-100"
+                  />
+                  <div>
+                    <h4 className="text-2xl font-bold text-gray-900">{testimonials[current].name}</h4>
+                    <div className="mt-1 flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <StarIcon key={i} />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+                <motion.hr variants={itemVariants} className="border-gray-200" />
+                <motion.p
+                  variants={itemVariants}
+                  className="mt-5 text-lg md:text-xl font-medium leading-relaxed text-gray-700 before:content-['“'] before:mr-1 before:text-4xl before:text-orange-500 before:font-serif after:content-['”'] after:ml-1 after:text-4xl after:text-orange-500 after:font-serif"
+                >
+                  {testimonials[current].text}
+                </motion.p>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
