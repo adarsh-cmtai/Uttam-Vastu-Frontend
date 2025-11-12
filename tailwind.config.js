@@ -1,6 +1,11 @@
 // tailwind.config.js
 module.exports = {
-  // ...baaki configuration
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -23,6 +28,6 @@ module.exports = {
     },
   },
   plugins: [
-     require('tailwindcss-textshadow'), // Ise install karna padega: npm install -D tailwindcss-textshadow
+    require('tailwindcss-textshadow'),
   ],
 };

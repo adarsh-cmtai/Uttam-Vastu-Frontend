@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence, Variants } from "framer-motion"
 
 const testimonials = [
   {
     name: "Rina Sharma",
-    text: "Uttam Vastu has been incredibly helpful in guiding me through a difficult career transition. The insights were accurate and actionable.",
+    text: "Vastumaye has been incredibly helpful in guiding me through a difficult career transition. The insights were accurate and actionable.",
     image: "/client-portrait-woman.jpg",
   },
   {
@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     name: "Vikram Pandey",
-    text: "Exceptional guidance on financial matters. Uttam Vastu provided practical advice backed by astrology.",
+    text: "Exceptional guidance on financial matters. Vastumaye provided practical advice backed by astrology.",
     image: "/client-portrait-man.jpg",
   },
   {
@@ -31,41 +31,26 @@ const testimonials = [
   },
   {
     name: "Reema Vats",
-    text: "Uttam Vastu is professional, knowledgeable, and genuinely cares about their clients' wellbeing.",
+    text: "Vastumaye is professional, knowledgeable, and genuinely cares about their clients' wellbeing.",
     image: "/client-portrait-woman.jpg",
   },
 ]
 
-const cardVariants: Variants = {
-  enter: {
+const sliderVariants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? '100%' : '-100%',
     opacity: 0,
-    y: 30,
-    scale: 0.98,
-  },
+  }),
   center: {
+    x: 0,
     opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      ease: "easeOut",
-      staggerChildren: 0.1,
-    },
+    transition: { duration: 0.5, ease: 'easeOut' },
   },
-  exit: {
+  exit: (direction: number) => ({
+    x: direction < 0 ? '100%' : '-100%',
     opacity: 0,
-    y: -30,
-    scale: 0.98,
-    transition: {
-      duration: 0.3,
-      ease: "easeIn",
-    },
-  },
-}
-
-const itemVariants: Variants = {
-  enter: { opacity: 0, y: 20 },
-  center: { opacity: 1, y: 0 },
+    transition: { duration: 0.3, ease: 'easeIn' },
+  }),
 }
 
 const StarIcon = () => (
@@ -75,84 +60,84 @@ const StarIcon = () => (
 )
 
 export default function TestimonialsSection() {
-  const [current, setCurrent] = useState(0)
+  const [[page, direction], setPage] = useState([0, 0])
 
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection])
+  }
+  
+  const current = ((page % testimonials.length) + testimonials.length) % testimonials.length
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      paginate(1)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [page])
+  
   return (
-    <section className="py-20 sm:py-28 bg-gray-50 as_section">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
             Trusted by People Like You
           </h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
             Real stories from real clients. Discover how astrological guidance has provided clarity, direction, and
             peace of mind in their lives.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
-          <div className="flex flex-col gap-3 lg:col-span-4">
-            {testimonials.map((testimonial, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrent(idx)}
-                className={`w-full p-4 rounded-lg text-left transition-all duration-300 ease-in-out transform focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-orange-500 ${
-                  idx === current
-                    ? "bg-white border-l-4 border-orange-500 shadow-lg scale-[1.03]"
-                    : "bg-transparent hover:bg-white hover:shadow-md border-l-4 border-transparent"
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-gray-200"
-                  />
-                  <div>
-                    <h3 className="font-bold text-gray-800">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-500">{testimonial.text.substring(0, 30)}...</p>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-
-          <div className="lg:col-span-8 lg:sticky top-24">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                variants={cardVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="relative bg-white p-8 sm:p-10 rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
-              >
-                <motion.div variants={itemVariants} className="flex items-center gap-5 mb-5">
-                  <img
-                    src={testimonials[current].image}
-                    alt={testimonials[current].name}
-                    className="w-20 h-20 rounded-full object-cover border-4 border-gray-100"
-                  />
-                  <div>
-                    <h4 className="text-2xl font-bold text-gray-900">{testimonials[current].name}</h4>
-                    <div className="mt-1 flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <StarIcon key={i} />
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.hr variants={itemVariants} className="border-gray-200" />
-                <motion.p
-                  variants={itemVariants}
-                  className="mt-5 text-lg md:text-xl font-medium leading-relaxed text-gray-700 before:content-['“'] before:mr-1 before:text-4xl before:text-orange-500 before:font-serif after:content-['”'] after:ml-1 after:text-4xl after:text-orange-500 after:font-serif"
-                >
-                  {testimonials[current].text}
-                </motion.p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        <div className="max-w-3xl mx-auto relative h-80 flex items-center justify-center overflow-hidden">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={page}
+              custom={direction}
+              variants={sliderVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = Math.abs(offset.x)
+                if (swipe > 50) {
+                  paginate(offset.x > 0 ? -1 : 1)
+                }
+              }}
+              className="absolute w-full max-w-2xl bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl"
+            >
+              <img
+                src={testimonials[current].image}
+                alt={testimonials[current].name}
+                className="w-20 h-20 rounded-full object-cover border-4 border-white mb-4"
+              />
+              <div className="flex gap-1 mb-3">
+                {[...Array(5)].map((_, i) => ( <StarIcon key={i} /> ))}
+              </div>
+              <p className="text-lg text-white mb-4 leading-relaxed h-20">
+                "{testimonials[current].text}"
+              </p>
+              <h4 className="text-xl font-bold text-white tracking-wide">
+                {testimonials[current].name}
+              </h4>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        
+        <div className="flex justify-center gap-2 mt-8">
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setPage([idx, idx > current ? 1 : -1])}
+              className={`h-3 rounded-full transition-all duration-300 ease-in-out ${
+                idx === current ? "w-6 bg-white" : "w-3 bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>

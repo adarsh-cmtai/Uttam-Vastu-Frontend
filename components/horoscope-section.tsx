@@ -41,14 +41,14 @@ const cardVariants: Variants = {
 
 export default function HoroscopeSection() {
   return (
-    <section className="py-20 sm:py-28 bg-slate-50 as_section">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
             Horoscope Forecasts
           </h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
             This week is a time for reflection and personal growth. Focus on nurturing your relationships and take some
             time for self-care to recharge your energy.
           </p>
@@ -65,15 +65,15 @@ export default function HoroscopeSection() {
             <motion.a
               key={sign.name}
               href="#"
-              className="group bg-white p-6 rounded-xl border border-gray-200 text-center cursor-pointer shadow-sm transition-all duration-300 hover:border-orange-500 hover:shadow-lg"
+              className="group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 text-center cursor-pointer shadow-lg shadow-black/10 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
               variants={cardVariants}
               whileHover={{ y: -5 }}
             >
-              <div className="text-6xl mb-3 font-serif text-orange-500 transition-transform duration-300 group-hover:scale-110">
+              <div className="text-6xl mb-3 font-serif text-white transition-all duration-300 group-hover:scale-110 group-hover:text-[#D7281E]">
                 {sign.symbol}
               </div>
-              <h4 className="font-bold text-lg text-gray-800 mb-1">{sign.name}</h4>
-              <p className="text-sm text-gray-500">{sign.dates}</p>
+              <h4 className="font-bold text-lg text-white mb-1 transition-colors duration-300 group-hover:text-stone-900">{sign.name}</h4>
+              <p className="text-sm text-white/80 transition-colors duration-300 group-hover:text-stone-700">{sign.dates}</p>
             </motion.a>
           ))}
         </motion.div>

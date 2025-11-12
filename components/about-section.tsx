@@ -22,16 +22,15 @@ export default function AboutSection() {
   }
 
   return (
-    <section className="py-20 sm:py-28 bg-white as_section">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-            About Uttam Vastu
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
+            About Vastumaye
           </h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
-            Uttam Vastu is your gateway to the profound wisdom of Vedic Astrology. Our mission is to provide you with
-            meaningful insights into your horoscope, planetary placements, and life's journey.
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
+            At Vastumaye, we observe Vastu as dharma — a sacred duty to nurture safety, harmony, and joy in every home and workplace. Our mission is simple: Bring peace where you live, prosperity where you work.
           </p>
         </div>
 
@@ -43,11 +42,11 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <div className="absolute w-[90%] h-[90%] bg-slate-100 rounded-2xl transform rotate-[-6deg]"></div>
+            <div className="absolute w-[90%] h-[90%] bg-white/60 rounded-full transform rotate-[-6deg]"></div>
             <img
               src="/astrologer-professional-portrait.jpg"
-              alt="Uttam Vastu"
-              className="relative w-full max-w-sm h-auto rounded-2xl shadow-2xl object-cover aspect-square"
+              alt="Vastumaye Vastu Master"
+              className="relative w-full max-w-sm h-auto rounded-full shadow-2xl object-cover aspect-square"
             />
           </motion.div>
 
@@ -57,52 +56,57 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            <motion.h2 variants={itemVariants} className="text-3xl font-bold text-gray-900 mb-6">
-              Illuminating Your Path with Ancient Wisdom
+            <motion.h2 variants={itemVariants} className="text-3xl font-bold text-white mb-6 font-serif">
+              Who We Are?
             </motion.h2>
 
-            <motion.p variants={itemVariants} className="text-gray-600 leading-relaxed mb-6">
-              We specialize in personalized Vedic Astrology consultations designed to illuminate your life's path. We
-              help you navigate your journey with clarity and confidence by:
+            <motion.p variants={itemVariants} className="text-white leading-relaxed mb-6">
+              Born from a deep-rooted belief in Sanatan wisdom, our team of certified Vastu Masters blends experience with quiet passion. We listen first, visit with respect, and then craft remedies that heal without upheaval.
+            </motion.p>
+            
+            <motion.p variants={itemVariants} className="font-semibold text-white mb-4">
+              We check all three types of Vastu Dosh:
             </motion.p>
 
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-4 mb-8 text-white">
               <motion.li variants={itemVariants} className="flex items-start gap-3">
-                <CheckIcon className="w-6 h-6 text-orange-500 mt-1 flex-shrink-0" />
+                <CheckIcon className="w-6 h-6 text-white mt-1 flex-shrink-0" />
                 <span>
-                  Analyzing your unique birth chart to uncover hidden opportunities, strengths, and challenges.
+                  <strong className="font-bold text-white">Bhumi Dosh (Land Defect):</strong> Analyzing the soil, slope, and shape of your land.
                 </span>
               </motion.li>
               <motion.li variants={itemVariants} className="flex items-start gap-3">
-                <CheckIcon className="w-6 h-6 text-orange-500 mt-1 flex-shrink-0" />
+                <CheckIcon className="w-6 h-6 text-white mt-1 flex-shrink-0" />
                 <span>
-                  Providing practical, actionable, and life-transforming guidance on health, relationships, career,
-                  and finances.
+                  <strong className="font-bold text-white">Vatavaran Dosh (Environment Defect):</strong> Assessing surrounding energies.
                 </span>
               </motion.li>
               <motion.li variants={itemVariants} className="flex items-start gap-3">
-                <CheckIcon className="w-6 h-6 text-orange-500 mt-1 flex-shrink-0" />
+                <CheckIcon className="w-6 h-6 text-white mt-1 flex-shrink-0" />
                 <span>
-                  Offering effective remedies and muhurats to ensure you live a balanced, purposeful, and spiritually
-                  enriched life.
+                  <strong className="font-bold text-white">Nirman Dosh (Construction Defect):</strong> Correcting structural imbalances.
                 </span>
               </motion.li>
             </ul>
 
             <motion.div
               variants={itemVariants}
-              className="flex items-center gap-4 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-lg mb-8"
+              className="flex items-center gap-4 bg-white/70 backdrop-blur-sm border-l-4 border-stone-800 p-4 rounded-r-lg"
             >
-              <AwardIcon className="w-10 h-10 text-orange-600 flex-shrink-0" />
+              <AwardIcon className="w-10 h-10 text-stone-900 flex-shrink-0" />
               <div>
-                <p className="font-bold text-lg text-gray-800">18+ Years of Experience</p>
-                <p className="text-sm text-gray-600">Guiding individuals towards a better future.</p>
+                <p className="font-bold text-lg text-stone-900">Authentic Sanatan Wisdom</p>
+                <p className="text-sm text-stone-700">Holistic Vastu remedies without demolition.</p>
               </div>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <button className="as_btn">Read More</button>
-            </motion.div>
+            <motion.p variants={itemVariants} className="mt-8 text-white italic leading-relaxed whitespace-pre-line">
+              अपने घर, कार्यालय और दुकान/उद्योग के वास्तु में सुधार करें, 
+              अव्यवस्था और विरोधाभास को दूर करें, 
+              सुख, स्वास्थ्य, शांति और धन को आकर्षित करें 
+              और वास्तुमय हो जाएं।
+            </motion.p>
+
           </motion.div>
         </div>
       </div>

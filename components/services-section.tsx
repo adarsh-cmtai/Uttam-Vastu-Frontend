@@ -69,12 +69,14 @@ export default function ServicesSection() {
   }
 
   return (
-    <section className="py-20 sm:py-28 bg-slate-50 as_section">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Our Services</h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
+            Our Services
+          </h1>
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
             Expert Vedic astrology consultations offer personalized readings to guide you in areas like career, health,
             relationships, and finances. Our services are designed to provide clear, actionable insights.
           </p>
@@ -91,7 +93,7 @@ export default function ServicesSection() {
             <img
               src="/meditation-spiritual-astrology.jpg"
               alt="Our services"
-              className="w-full h-auto max-w-lg rounded-xl shadow-xl object-cover aspect-[4/3]"
+              className="w-full h-auto max-w-lg rounded-full shadow-xl object-cover"
             />
           </motion.div>
 
@@ -105,18 +107,18 @@ export default function ServicesSection() {
             {services.map((service, idx) => (
               <motion.div
                 key={idx}
-                className="group bg-white p-6 rounded-xl border border-gray-200 shadow-sm text-left transition-all duration-300 hover:border-orange-500 hover:shadow-lg"
+                className="group bg-orange-50/80 backdrop-blur-sm p-6 rounded-xl border border-orange-200/50 shadow-lg shadow-black/10 text-left transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
               >
-                <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-100 mb-5">
-                  <service.icon className="w-6 h-6 text-orange-600" />
+                <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-stone-900/10 mb-5">
+                  <service.icon className="w-6 h-6 text-[#D7281E]" />
                 </div>
-                <h3 className="font-bold text-lg text-gray-800 mb-2">{service.title}</h3>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">{service.description}</p>
+                <h3 className="font-bold text-lg text-stone-900 mb-2">{service.title}</h3>
+                <p className="text-sm text-stone-700 mb-4 leading-relaxed">{service.description}</p>
                 <a
                   href="#"
-                  className="text-sm font-semibold text-orange-600 group-hover:text-orange-700 transition-colors"
+                  className="text-sm font-semibold text-[#D7281E] group-hover:text-stone-900 transition-colors"
                 >
                   Explore More &rarr;
                 </a>

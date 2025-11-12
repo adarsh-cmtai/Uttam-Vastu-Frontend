@@ -41,7 +41,7 @@ const stats = [
   { number: 25, suffix: "+", label: "Qualified Astrologers", icon: BriefcaseIcon },
 ]
 
-function Counter({ to, suffix }: { to: number; suffix: string }) {
+function Counter({ to, suffix, className }: { to: number; suffix: string; className?: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null)
   const isInView = useInView(nodeRef, { once: true, margin: "-50px" })
 
@@ -60,7 +60,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
   }, [to, isInView])
 
   return (
-    <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
+    <div className={`text-4xl sm:text-5xl font-extrabold tracking-tight ${className}`}>
       <span ref={nodeRef}>0</span>
       {suffix}
     </div>
@@ -79,14 +79,14 @@ export default function WhyChooseSection() {
   }
 
   return (
-    <section className="py-20 sm:py-28 as_section bg-slate-50">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
             Why Choose Us
           </h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
             With years of training in Vedic astrology and a genuine passion for helping others, we combine expertise and
             empathy in every reading. Our commitment to providing accurate, meaningful guidance sets us apart.
           </p>
@@ -102,15 +102,15 @@ export default function WhyChooseSection() {
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
-              className="relative flex flex-col items-center justify-center p-8 bg-white border border-gray-200 rounded-xl text-center shadow-md transition-shadow duration-300 hover:shadow-xl"
+              className="group relative flex flex-col items-center justify-center p-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-center shadow-lg shadow-black/10 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
               variants={itemVariants}
               whileHover={{ y: -5 }}
             >
-              <div className="flex items-center justify-center h-14 w-14 rounded-full bg-orange-100 mb-5">
-                <stat.icon className="w-8 h-8 text-orange-600" />
+              <div className="flex items-center justify-center h-14 w-14 rounded-full bg-white/20 mb-5 transition-colors duration-300 group-hover:bg-stone-900/10">
+                <stat.icon className="w-8 h-8 text-white transition-colors duration-300 group-hover:text-[#D7281E]" />
               </div>
-              <Counter to={stat.number} suffix={stat.suffix} />
-              <p className="mt-2 text-sm text-gray-600 font-medium">{stat.label}</p>
+              <Counter to={stat.number} suffix={stat.suffix} className="text-white transition-colors duration-300 group-hover:text-stone-900" />
+              <p className="mt-2 text-sm text-white/80 font-medium transition-colors duration-300 group-hover:text-stone-700">{stat.label}</p>
             </motion.div>
           ))}
         </motion.div>

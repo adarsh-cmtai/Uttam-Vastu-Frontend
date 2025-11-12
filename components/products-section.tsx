@@ -30,12 +30,14 @@ export default function ProductsSection() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   return (
-    <section className="py-20 sm:py-28 bg-slate-50 as_section">
+    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Popular Products</h1>
-          <div className="as_separator mx-auto w-24 h-1 bg-[#f46f21] rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-gray-600">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
+            Popular Products
+          </h1>
+          <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
+          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
             Explore our handpicked selection of authentic gemstones, each chosen for its purity and energy.
           </p>
         </div>
@@ -44,10 +46,10 @@ export default function ProductsSection() {
           {products.map((product, idx) => (
             <motion.div
               key={idx}
-              className="relative bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden group cursor-pointer"
+              className="relative bg-white/10 backdrop-blur-sm rounded-lg  border border-white/20 overflow-hidden group cursor-pointer"
               onMouseEnter={() => setHoveredId(idx)}
               onMouseLeave={() => setHoveredId(null)}
-              whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+              whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)" }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             >
               <div className="relative h-48 w-full overflow-hidden">
@@ -56,12 +58,12 @@ export default function ProductsSection() {
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
                 <AnimatePresence>
                   {hoveredId === idx && (
                     <motion.button
-                      className="absolute top-3 right-3 h-10 w-10 flex items-center justify-center rounded-full bg-white text-[#f46f21] shadow-lg"
+                      className="absolute top-3 right-3 h-10 w-10 flex items-center justify-center rounded-full bg-white text-[#D7281E] shadow-lg"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
@@ -74,10 +76,10 @@ export default function ProductsSection() {
               </div>
 
               <div className="p-4">
-                <h3 className="font-bold text-gray-800 text-lg truncate">{product.name}</h3>
-                <p className="text-sm text-gray-500 mb-3 truncate">{product.description}</p>
+                <h3 className="font-bold text-white text-lg truncate">{product.name}</h3>
+                <p className="text-sm text-white/80 mb-3 truncate">{product.description}</p>
                 <div className="flex justify-between items-center">
-                  <p className="text-xl font-extrabold text-[#f46f21]">{product.price}</p>
+                  <p className="text-xl font-extrabold text-white">{product.price}</p>
                   <div className="flex gap-0.5">
                     {[...Array(5)].map((_, i) => (
                       <StarIcon key={i} />
