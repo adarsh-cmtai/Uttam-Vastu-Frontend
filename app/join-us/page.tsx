@@ -68,17 +68,17 @@ export default function JoinUs() {
                   Vastu Solutions | Learn, Consult, Earn
                 </h2>
                 <div className="h-1 bg-stone-900/30 rounded mb-6 w-24"></div>
-                <p className="text-stone-700 mb-6 leading-relaxed">
-                  If you are a certified Vastu Shastra, Astrology, or Numerology practitioner with a heart for dharma and a commitment to excellence, we invite you to grow with us. We are weaving a trusted network of authentic consultants across India.
+                <p className="text-stone-700 mb-6 leading-relaxed text-lg">
+                  If you are a certified Vastu, Astrology, or Numerology practitioner with a heart for dharma and a commitment to excellence, we invite you to grow with us. We are weaving a trusted network of authentic consultants across India.
                 </p>
 
                 <h3 className="text-xl font-bold text-stone-900 mt-8 mb-4">Seamless Onboarding. Meaningful Opportunities.</h3>
                 <div className="bg-white/70 p-4 rounded-lg border border-orange-200/50 mb-6">
-                  <p className="text-stone-800 font-semibold">
+                  <p className="text-stone-800 font-semibold text-lg">
                     Become part of our inner circle for a modest annual contribution of <span className="text-[#D7281E]">₹5,000 per year</span>.
                   </p>
                 </div>
-                <ul className="space-y-3 text-stone-700 mb-8">
+                <ul className="space-y-3 text-stone-700 mb-8 text-lg">
                   <li className="flex items-start gap-3">
                     <span className="font-bold text-[#D7281E] mt-1">1.</span>
                     <span><strong>Share Your Journey:</strong> Fill out the application with your details, qualifications, and experience.</span>
@@ -94,26 +94,26 @@ export default function JoinUs() {
                 </ul>
 
                 <h3 className="text-xl font-bold text-stone-900 mt-8 mb-4">What You Gain</h3>
-                <ul className="space-y-4">
+                <ul className="space-y-4 text-lg">
                   <li className="flex gap-4 items-start">
                     <div className="flex-shrink-0 w-10 h-10 bg-stone-900/10 rounded-full flex items-center justify-center"><Users className="w-5 h-5 text-[#D7281E]" /></div>
                     <div>
                       <h4 className="font-bold text-stone-900">Real Client Cases</h4>
-                      <p className="text-stone-700 text-sm">Allocated by geography, availability, and your unique strengths.</p>
+                      <p className="text-stone-700 text-md">Allocated by geography, availability, and your unique strengths.</p>
                     </div>
                   </li>
                   <li className="flex gap-4 items-start">
                     <div className="flex-shrink-0 w-10 h-10 bg-stone-900/10 rounded-full flex items-center justify-center"><BookOpen className="w-5 h-5 text-[#D7281E]" /></div>
                     <div>
                       <h4 className="font-bold text-stone-900">Exclusive Peer Circle</h4>
-                      <p className="text-stone-700 text-sm">A private discussion group for learning, support, and collaboration.</p>
+                      <p className="text-stone-700 text-md">A private discussion group for learning, support, and collaboration.</p>
                     </div>
                   </li>
                   <li className="flex gap-4 items-start">
                     <div className="flex-shrink-0 w-10 h-10 bg-stone-900/10 rounded-full flex items-center justify-center"><ShieldCheck className="w-5 h-5 text-[#D7281E]" /></div>
                     <div>
                       <h4 className="font-bold text-stone-900">A Trusted Brand</h4>
-                      <p className="text-stone-700 text-sm">Carry the Vastumaye name with pride in Delhi-NCR and beyond.</p>
+                      <p className="text-stone-700 text-md">Carry the Vastumaye name with pride in Delhi-NCR and beyond.</p>
                     </div>
                   </li>
                 </ul>

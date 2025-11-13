@@ -31,7 +31,7 @@ export default function Services() {
             {"Our expert services offer you tailored insights that align with your unique cosmic blueprint, empowering you to make informed decisions and live with purpose."}
           </p>
           <p className="text-lg leading-relaxed text-white/90 drop-shadow-sm">
-            We specialize in Vastu Shastra consultations, providing personalized readings to harmonize your living and working spaces for peace, prosperity, and well-being.
+            We specialize in Vastu consultations, providing personalized readings to harmonize your living and working spaces for peace, prosperity, and well-being.
           </p>
         </div>
       </div>

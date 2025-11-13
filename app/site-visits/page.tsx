@@ -95,7 +95,7 @@ export default function SiteVisits() {
                   Site Visit – Hands-On Learning
                 </h2>
                 <div className="h-1 bg-stone-900/30 rounded mb-6 w-24"></div>
-                <p className="text-stone-700 mb-6 leading-relaxed">
+                <p className="text-stone-700 text-lg mb-6 leading-relaxed">
                   Gain invaluable experience with real Vastu visits for analysis and practice. These sessions are designed exclusively for students of Vastu to apply their theoretical knowledge in a practical, real-world setting.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">

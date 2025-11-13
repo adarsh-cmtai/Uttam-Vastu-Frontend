@@ -5,34 +5,34 @@ import { motion, AnimatePresence, Variants } from "framer-motion"
 
 const testimonials = [
   {
-    name: "Rina Sharma",
-    text: "Vastumaye has been incredibly helpful in guiding me through a difficult career transition. The insights were accurate and actionable.",
+    name: "Ananya Singh",
+    text: "After VastuMaye's consultation, the energy in our home completely shifted. The constant arguments stopped, and there's a newfound peace. The remedies were simple and required no demolition.",
     image: "/client-portrait-woman.jpg",
   },
   {
-    name: "Adi Kumar",
-    text: "I was skeptical at first, but the personalized chart analysis changed my perspective completely. Highly recommended!",
+    name: "Rohan Gupta",
+    text: "My business was facing consistent setbacks. The changes suggested by VastuMaye for my office were subtle but incredibly powerful. We've seen a significant turnaround in sales and team morale.",
     image: "/client-portrait-man.jpg",
   },
   {
-    name: "Sushmita Sharma",
-    text: "The consultation helped me understand my relationships better. I feel more confident about my future now.",
+    name: "Priya Kulkarni",
+    text: "My sleep patterns were disturbed for years. They identified a Vastu dosh in my bedroom and their simple rearrangement advice has given me the most restful sleep I've had in a decade.",
     image: "/client-portrait-woman.jpg",
   },
   {
-    name: "Vikram Pandey",
-    text: "Exceptional guidance on financial matters. Vastumaye provided practical advice backed by astrology.",
+    name: "Sameer Patel",
+    text: "The entire process was so professional and transparent. They listened to our problems patiently and provided practical solutions. Truly authentic and knowledgeable Vastu experts.",
     image: "/client-portrait-man.jpg",
   },
   {
-    name: "Anjali Desai",
-    text: "The remedies suggested have made a significant difference in my health and wellness journey.",
+    name: "Meera Iyer",
+    text: "We consulted VastuMaye before buying our new flat. Their guidance was invaluable in helping us choose a property with positive Vastu, saving us from potential future issues. Highly recommended!",
     image: "/client-portrait-woman.jpg",
   },
   {
-    name: "Reema Vats",
-    text: "Vastumaye is professional, knowledgeable, and genuinely cares about their clients' wellbeing.",
-    image: "/client-portrait-woman.jpg",
+    name: "Aarav Mishra",
+    text: "Felt like our finances were stuck. VastuMaye helped identify and correct energy blockages at home. We've seen a much better flow of opportunities and stability since.",
+    image: "/client-portrait-man.jpg",
   },
 ]
 
@@ -76,16 +76,15 @@ export default function TestimonialsSection() {
   }, [page])
   
   return (
-    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
+    <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
-            Trusted by People Like You
+            Stories of Harmony & Prosperity
           </h1>
           <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
           <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
-            Real stories from real clients. Discover how astrological guidance has provided clarity, direction, and
-            peace of mind in their lives.
+            Real stories from our clients. Discover how VastuMaye's guidance has transformed their homes and workplaces, bringing in peace, prosperity, and positive energy.
           </p>
         </div>
 
@@ -117,7 +116,7 @@ export default function TestimonialsSection() {
               <div className="flex gap-1 mb-3">
                 {[...Array(5)].map((_, i) => ( <StarIcon key={i} /> ))}
               </div>
-              <p className="text-lg text-white mb-4 leading-relaxed h-20">
+              <p className="text-lg text-white mb-4 leading-relaxed h-24 sm:h-20">
                 "{testimonials[current].text}"
               </p>
               <h4 className="text-xl font-bold text-white tracking-wide">

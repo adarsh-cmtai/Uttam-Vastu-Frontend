@@ -95,11 +95,11 @@ export default function LiveSessions() {
                   Online Vastu Practice Sessions
                 </h2>
                 <div className="h-1 bg-stone-900/30 rounded mb-6 w-24"></div>
-                <p className="text-stone-700 mb-6 leading-relaxed">
+                <p className="text-stone-700 text-lg mb-6 leading-relaxed">
                   Deepen your understanding and sharpen your skills by analyzing real-world Vastu cases. We provide actual home and office floor plans for a hands-on learning experience. Limited seats available to ensure personalized attention.
                 </p>
 
-                <div className="space-y-4 mt-8">
+                <div className="space-y-4 mt-8 text-lg">
                   {packages.map((pkg, index) => (
                     <motion.div
                       key={index}

@@ -1,18 +1,7 @@
 "use client"
 
 import { motion, Variants } from "framer-motion"
-
-const PhoneIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-  </svg>
-)
-
-const StarIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-  </svg>
-)
+import { ClipboardCheckIcon, LaptopIcon } from "lucide-react"
 
 const HomeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
@@ -20,32 +9,36 @@ const HomeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-const HeartIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const BuildingOfficeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6M9 11.25h6M9 15.75h6" />
   </svg>
 )
 
 const services = [
   {
-    title: "Telephonic Consultation",
-    description: "Direct, one-on-one guidance over the phone for your pressing questions.",
-    icon: PhoneIcon,
-  },
-  {
-    title: "Personalized Horoscopes",
-    description: "In-depth chart analysis for specific areas like career, health, or relationships.",
-    icon: StarIcon,
-  },
-  {
-    title: "Vastu Shastra",
-    description: "Harmonize your living and working spaces for peace, prosperity, and well-being.",
+    title: "Residential Vastu Analysis",
+    description: "Harmonize your home to foster health, happiness, and strong family bonds. On-site and online options available.",
     icon: HomeIcon,
+    link: "#",
   },
   {
-    title: "Match Making",
-    description: "Ensure compatibility and a harmonious partnership with our detailed kundli matching.",
-    icon: HeartIcon,
+    title: "Commercial & Industrial Vastu",
+    description: "Optimize your office, shop, or factory for enhanced productivity, growth, and financial success.",
+    icon: BuildingOfficeIcon,
+    link: "#",
+  },
+  {
+    title: "Pre-Purchase Guidance",
+    description: "Invest wisely. We analyze potential properties to ensure they align with Vastu principles before you commit.",
+    icon: ClipboardCheckIcon,
+    link: "#",
+  },
+  {
+    title: "Online Vastu Consultation",
+    description: "Receive expert Vastu advice from anywhere in the world through detailed video calls and floor plan analysis.",
+    icon: LaptopIcon,
+    link: "#",
   },
 ]
 
@@ -69,16 +62,15 @@ export default function ServicesSection() {
   }
 
   return (
-    <section className="py-12 sm:py-12 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
+    <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
-            Our Services
+            Our Authentic Vastu Services
           </h1>
           <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
-            Expert Vedic astrology consultations offer personalized readings to guide you in areas like career, health,
-            relationships, and finances. Our services are designed to provide clear, actionable insights.
+          <p className="max-w-3xl mx-auto text-xl leading-relaxed text-white drop-shadow-sm">
+            We offer authentic Vastu consultations to create balance and positive energy. Our solutions are practical, powerful, and designed to bring lasting harmony without demolition.
           </p>
         </div>
 
@@ -92,7 +84,7 @@ export default function ServicesSection() {
           >
             <img
               src="/meditation-spiritual-astrology.jpg"
-              alt="Our services"
+              alt="Spiritual harmony and balance achieved through Vastu principles"
               className="w-full h-auto max-w-lg rounded-full shadow-xl object-cover"
             />
           </motion.div>
@@ -117,7 +109,7 @@ export default function ServicesSection() {
                 <h3 className="font-bold text-lg text-stone-900 mb-2">{service.title}</h3>
                 <p className="text-sm text-stone-700 mb-4 leading-relaxed">{service.description}</p>
                 <a
-                  href="#"
+                  href={service.link}
                   className="text-sm font-semibold text-[#D7281E] group-hover:text-stone-900 transition-colors"
                 >
                   Explore More &rarr;

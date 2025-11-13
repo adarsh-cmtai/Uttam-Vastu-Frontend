@@ -19,7 +19,7 @@ export default function Home() {
       <ServicesSection />
       <TestimonialsSection />
       <WhyChooseSection />
-      <ProductsSection />
+      {/* <ProductsSection /> */}
       <Footer />
       <FloatingWhatsApp />
     </div>

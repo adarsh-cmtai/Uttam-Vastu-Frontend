@@ -57,7 +57,7 @@ export default function VastuConsultationForm() {
               <h2 className="text-3xl font-extrabold text-white mb-4 font-serif drop-shadow-md">
                 Vastu Consultation (with Site Visit)
               </h2>
-              <p className="text-white/90 mb-8 leading-relaxed drop-shadow-sm">
+              <p className="text-white/90 mb-8 text-lg leading-relaxed drop-shadow-sm">
                 Fill the form to request an on-site consultation. Our experts visit your property to provide a detailed analysis and personalized remedies.
               </p>
 

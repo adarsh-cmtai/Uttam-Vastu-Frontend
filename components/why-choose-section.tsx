@@ -32,14 +32,15 @@ const BriefcaseIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 13.255A23.931 23.931 0 0012 15c3.183 0 6.22-.62 9-1.745M12 21a9 9 0 100-18 9 9 0 000 18z" />
   </svg>
 )
-
 const stats = [
-  { number: 1200, suffix: "+", label: "Trusted Clients", icon: UserGroupIcon },
-  { number: 18, suffix: "+", label: "Years Experience", icon: CalendarIcon },
-  { number: 99, suffix: "%", label: "Success Rate", icon: CheckCircleIcon },
-  { number: 50, suffix: "+", label: "Horoscope Types", icon: StarIcon },
-  { number: 25, suffix: "+", label: "Qualified Astrologers", icon: BriefcaseIcon },
+  { number: 15, suffix: "+", label: "Clients Guided", icon: UserGroupIcon },
+  { number: 1, suffix: "", label: "Year of Practice", icon: CalendarIcon },
+  { number: 90, suffix: "%", label: "Positive Feedback", icon: CheckCircleIcon },
+  { number: 3, suffix: "+", label: "Consultation Types", icon: StarIcon },
+  { number: 1, suffix: "", label: "Certified Vastu Expert", icon: BriefcaseIcon },
 ]
+
+
 
 function Counter({ to, suffix, className }: { to: number; suffix: string; className?: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null)

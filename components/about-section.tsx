@@ -42,11 +42,11 @@ export default function AboutSection() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <div className="absolute w-[90%] h-[90%] bg-white/60 rounded-full transform rotate-[-6deg]"></div>
+            <div className="absolute w-[90%] h-[90%] bg-white/10 rounded-full transform rotate-[90deg]"></div>
             <img
-              src="/astrologer-professional-portrait.jpg"
+              src="/about2.jpg"
               alt="Vastumaye Vastu Master"
-              className="relative w-full max-w-sm h-auto rounded-full shadow-2xl object-cover aspect-square"
+              className="relative w-full max-w-lg h-auto rounded-full shadow-2xl object-cover aspect-square"
             />
           </motion.div>
 
@@ -60,15 +60,15 @@ export default function AboutSection() {
               Who We Are?
             </motion.h2>
 
-            <motion.p variants={itemVariants} className="text-white leading-relaxed mb-6">
+            <motion.p variants={itemVariants} className="text-white text-lg leading-relaxed mb-6">
               Born from a deep-rooted belief in Sanatan wisdom, our team of certified Vastu Masters blends experience with quiet passion. We listen first, visit with respect, and then craft remedies that heal without upheaval.
             </motion.p>
             
-            <motion.p variants={itemVariants} className="font-semibold text-white mb-4">
+            <motion.p variants={itemVariants} className="font-semibold text-lg text-white mb-4">
               We check all three types of Vastu Dosh:
             </motion.p>
 
-            <ul className="space-y-4 mb-8 text-white">
+            <ul className="space-y-4 mb-8 text-white text-lg">
               <motion.li variants={itemVariants} className="flex items-start gap-3">
                 <CheckIcon className="w-6 h-6 text-white mt-1 flex-shrink-0" />
                 <span>
@@ -100,7 +100,7 @@ export default function AboutSection() {
               </div>
             </motion.div>
 
-            <motion.p variants={itemVariants} className="mt-8 text-white italic leading-relaxed whitespace-pre-line">
+            <motion.p variants={itemVariants} className="mt-8 text-white text-lg italic leading-relaxed whitespace-pre-line">
               अपने घर, कार्यालय और दुकान/उद्योग के वास्तु में सुधार करें, 
               अव्यवस्था और विरोधाभास को दूर करें, 
               सुख, स्वास्थ्य, शांति और धन को आकर्षित करें 
