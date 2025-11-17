@@ -47,12 +47,17 @@ const logout = () => {
     return axiosInstance.post('/logout');
 };
 
+const getCurrentUser = () => {
+    return axiosInstance.get('/me');
+};
+
 const authService = {
     register,
     login,
     verifyOTP,
     resendOTP,
     logout,
+    getCurrentUser,
 };
 
 export default authService;

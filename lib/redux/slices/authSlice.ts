@@ -60,6 +60,18 @@ export const logoutUser = createAsyncThunk(
     }
 );
 
+export const fetchCurrentUser = createAsyncThunk(
+    'auth/fetchCurrentUser',
+    async (_, thunkAPI) => {
+        try {
+            const response = await authService.getCurrentUser();
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue('Session expired or invalid.');
+        }
+    }
+);
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -79,10 +91,10 @@ const authSlice = createSlice({
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ user: User }>) => {
+            .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ data: { user: User } }>) => {
                 state.status = 'succeeded';
                 state.isAuthenticated = true;
-                state.user = action.payload.user;
+                state.user = action.payload.data.user;
                 state.error = null;
             })
             .addCase(loginUser.rejected, (state, action) => {
@@ -95,6 +107,19 @@ const authSlice = createSlice({
                 state.user = null;
                 state.isAuthenticated = false;
                 state.status = 'idle';
+            })
+            .addCase(fetchCurrentUser.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchCurrentUser.fulfilled, (state, action: PayloadAction<{ data: User }>) => {
+                state.isAuthenticated = true;
+                state.user = action.payload.data;
+                state.status = 'succeeded';
+            })
+            .addCase(fetchCurrentUser.rejected, (state) => {
+                state.isAuthenticated = false;
+                state.user = null;
+                state.status = 'failed';
             });
     },
 });
