@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import authService from '../../../services/authService';
+import Cookies from 'js-cookie';
 
 interface User {
     _id: string;
@@ -67,6 +68,7 @@ export const fetchCurrentUser = createAsyncThunk(
             const response = await authService.getCurrentUser();
             return response.data;
         } catch (error: any) {
+            Cookies.remove('accessToken');
             return thunkAPI.rejectWithValue('Session expired or invalid.');
         }
     }
@@ -91,11 +93,15 @@ const authSlice = createSlice({
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ data: { user: User } }>) => {
+            .addCase(loginUser.fulfilled, (state, action) => {
+                const { user, accessToken } = action.payload.data;
                 state.status = 'succeeded';
                 state.isAuthenticated = true;
-                state.user = action.payload.data.user;
+                state.user = user;
                 state.error = null;
+                if (accessToken) {
+                    Cookies.set('accessToken', accessToken, { expires: 1, secure: true, sameSite: 'strict' });
+                }
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
@@ -107,6 +113,13 @@ const authSlice = createSlice({
                 state.user = null;
                 state.isAuthenticated = false;
                 state.status = 'idle';
+                Cookies.remove('accessToken');
+            })
+             .addCase(logoutUser.rejected, (state) => {
+                state.user = null;
+                state.isAuthenticated = false;
+                state.status = 'idle';
+                Cookies.remove('accessToken');
             })
             .addCase(fetchCurrentUser.pending, (state) => {
                 state.status = 'loading';

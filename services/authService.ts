@@ -1,63 +1,16 @@
-import axios from 'axios';
+import apiClient from './apiClient';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth`;
+interface RegisterData { name: string; email: string; password: string; }
+interface LoginData { email: string; password: string; }
+interface VerifyOTPData { email: string; otp: string; }
+interface ResendOTPData { email: string; }
 
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
+const register = (userData: RegisterData) => apiClient.post('/auth/register', userData);
+const login = (userData: LoginData) => apiClient.post('/auth/login', userData);
+const verifyOTP = (data: VerifyOTPData) => apiClient.post('/auth/verify-otp', data);
+const resendOTP = (data: ResendOTPData) => apiClient.post('/auth/resend-otp', data);
+const logout = () => apiClient.post('/auth/logout');
+const getCurrentUser = () => apiClient.get('/auth/me');
 
-interface RegisterData {
-    name: string;
-    email: string;
-    password: string;
-}
-
-interface LoginData {
-    email: string;
-    password: string;
-}
-
-interface VerifyOTPData {
-    email: string;
-    otp: string;
-}
-
-interface ResendOTPData {
-    email: string;
-}
-
-const register = (userData: RegisterData) => {
-    return axiosInstance.post('/register', userData);
-};
-
-const login = (userData: LoginData) => {
-    return axiosInstance.post('/login', userData);
-};
-
-const verifyOTP = (data: VerifyOTPData) => {
-    return axiosInstance.post('/verify-otp', data);
-};
-
-const resendOTP = (data: ResendOTPData) => {
-    return axiosInstance.post('/resend-otp', data);
-};
-
-const logout = () => {
-    return axiosInstance.post('/logout');
-};
-
-const getCurrentUser = () => {
-    return axiosInstance.get('/me');
-};
-
-const authService = {
-    register,
-    login,
-    verifyOTP,
-    resendOTP,
-    logout,
-    getCurrentUser,
-};
-
+const authService = { register, login, verifyOTP, resendOTP, logout, getCurrentUser };
 export default authService;
