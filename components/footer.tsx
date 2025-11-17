@@ -1,9 +1,14 @@
 "use client"
 
+import React from "react";
 import Link from "next/link"
 import { Facebook, Instagram, Youtube, MessageSquare, MapPin, Mail, Phone } from "lucide-react"
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+  const content = t.footer;
+
   return (
     <footer className="bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
@@ -14,7 +19,7 @@ export default function Footer() {
               VastuMaye
             </h3>
             <p className="text-sm text-white/90 mb-6 max-w-xs drop-shadow-sm">
-              Ancient wisdom for modern living. Unlock your potential through the power of Vastu Shastra.
+              {content.description}
             </p>
             <div className="flex items-center gap-4">
               <a href="#" aria-label="Facebook" className="text-white/80 hover:text-white transition-colors duration-300">
@@ -30,31 +35,29 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">Quick Links</h4>
+            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.quickLinksTitle}</h4>
             <ul className="space-y-3 text-sm">
-              <li><Link href="/about" className="text-white/80 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/services" className="text-white/80 hover:text-white transition-colors">Services</Link></li>
-              <li><Link href="/join-us" className="text-white/80 hover:text-white transition-colors">Join Us</Link></li>
-              <li><Link href="/contact" className="text-white/80 hover:text-white transition-colors">Contact</Link></li>
+              {content.links.map(link => (
+                <li key={link.text}><Link href={link.href} className="text-white/80 hover:text-white transition-colors">{link.text}</Link></li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">Our Services</h4>
+            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.ourServicesTitle}</h4>
             <ul className="space-y-3 text-sm">
-              <li><Link href="/services" className="text-white/80 hover:text-white transition-colors">Residential Vastu</Link></li>
-              <li><Link href="/services" className="text-white/80 hover:text-white transition-colors">Commercial Vastu</Link></li>
-              <li><Link href="/live-sessions" className="text-white/80 hover:text-white transition-colors">Online Consultation</Link></li>
-              <li><Link href="/site-visits" className="text-white/80 hover:text-white transition-colors">Site Visit Practical</Link></li>
+              {content.services.map(service => (
+                <li key={service.text}><Link href={service.href} className="text-white/80 hover:text-white transition-colors">{service.text}</Link></li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">Contact Us</h4>
+            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.contactUsTitle}</h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-white/80 mt-0.5 shrink-0" />
-                <span className="text-white/80">Delhi, India</span>
+                <span className="text-white/80">{content.address}</span>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-white/80 mt-0.5 shrink-0" />
@@ -66,15 +69,15 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <MessageSquare className="w-5 h-5 text-white/80 mt-0.5 shrink-0" />
-                <a href="https://wa.me/917303062088" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">WhatsApp Us</a>
+                <a href="https://wa.me/917303062088" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors">{content.whatsapp}</a>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/20 text-center text-sm text-white/70">
-          <p>&copy; {new Date().getFullYear()} VastuMaye. All Rights Reserved.</p>
-          <p className="mt-2 font-serif">सर्वे भवन्तु सुखिनः – May all be happy.</p>
+          <p>&copy; {new Date().getFullYear()} VastuMaye. {content.copyright}</p>
+          <p className="mt-2 font-serif">{content.tagline}</p>
         </div>
       </div>
     </footer>

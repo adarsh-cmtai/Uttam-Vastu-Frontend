@@ -1,17 +1,8 @@
 "use client"
 
+import React from "react";
 import { motion, Variants } from "framer-motion"
-
-const vastuServices = [
-  { name: "Residential Vastu", description: "Harmony for Your Home", symbol: "🏡" },
-  { name: "Commercial Vastu", description: "Prosperity for Business", symbol: "🏢" },
-  { name: "Industrial Vastu", description: "Productivity & Growth", symbol: "🏭" },
-  { name: "Health & Wellness", description: "Energize Your Well-being", symbol: "❤️" },
-  { name: "Wealth & Prosperity", description: "Attract Abundance", symbol: "💰" },
-  { name: "Peace & Relationships", description: "Strengthen Family Bonds", symbol: "👨‍👩‍👧‍👦" },
-  { name: "New Construction", description: "Build with Balance", symbol: "🏗️" },
-  { name: "Pre-Purchase Advice", description: "Invest with Confidence", symbol: "🔍" },
-]
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const gridVariants: Variants = {
   hidden: { opacity: 0 },
@@ -36,17 +27,20 @@ const cardVariants: Variants = {
 }
 
 export default function VastuServicesSection() {
+  const { t } = useLanguage();
+  const content = t.coreServices;
+  const vastuServices = content.services;
+
   return (
     <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">
-            Our Core Vastu Services
+            {content.title}
           </h1>
           <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
           <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
-            We apply the timeless principles of Vastu Shastra to harmonize every aspect of your life, ensuring your
-            space nurtures peace, attracts prosperity, and enhances well-being.
+            {content.description}
           </p>
         </div>
 
@@ -57,9 +51,9 @@ export default function VastuServicesSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {vastuServices.map((service) => (
+          {vastuServices.map((service, index) => (
             <motion.a
-              key={service.name}
+              key={index}
               href="#"
               className="group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 text-center cursor-pointer shadow-lg shadow-black/10 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
               variants={cardVariants}

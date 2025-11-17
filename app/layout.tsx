@@ -1,22 +1,24 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Philosopher, Lato } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import { Philosopher, Lato } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import StoreProvider from "@/lib/redux/StoreProvider";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Toaster } from 'react-hot-toast';
+import "./globals.css";
 
-const philosopher = Philosopher({ subsets: ["latin"], weight: ["400", "700"] })
-const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] })
+const philosopher = Philosopher({ subsets: ["latin"], weight: ["400", "700"] });
+const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
-  title: "Uttam Vastu - Vedic Astrology Guidance",
-  description: "Unlock the secrets of your birth chart and discover your life's true potential with Uttam Vastu",
-  generator: "v0.app",
-}
+  title: "Vastumaye - Vastu Shastra & Astrology",
+  description: "Authentic Vastu guidance for harmony, wellness, and prosperity.",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -30,9 +32,20 @@ export default function RootLayout({
         className={`${lato.className} antialiased`}
         style={{ "--font-philosopher": philosopher.style.fontFamily } as React.CSSProperties}
       >
-        {children}
+        <StoreProvider>
+          <LanguageProvider>
+            {children}
+            <Toaster 
+              position="top-center"
+              toastOptions={{
+                success: { style: { background: '#28a745', color: 'white' } },
+                error: { style: { background: '#dc3545', color: 'white' } },
+              }}
+            />
+          </LanguageProvider>
+        </StoreProvider>
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
