@@ -15,7 +15,7 @@ const navLinks = [
   { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
   { label: "Join Us Apps", href: "/admin/join-applications", icon: Briefcase },
   { label: "Student Sessions", href: "/admin/student-sessions", icon: BookUser },
-  { label: "Content", href: "/admin/content", icon: Newspaper },
+  // { label: "Content", href: "/admin/content", icon: Newspaper },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

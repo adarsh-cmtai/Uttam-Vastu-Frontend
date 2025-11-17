@@ -91,22 +91,25 @@ const authSlice = createSlice({
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ data: { user: User } }>) => {
+            .addCase(loginUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.isAuthenticated = true;
                 state.user = action.payload.data.user;
+                localStorage.setItem('accessToken', action.payload.data.accessToken);
                 state.error = null;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.isAuthenticated = false;
                 state.user = null;
+                localStorage.removeItem('accessToken');
                 state.error = action.payload as string;
             })
             .addCase(logoutUser.fulfilled, (state) => {
                 state.user = null;
                 state.isAuthenticated = false;
                 state.status = 'idle';
+                localStorage.removeItem('accessToken');
             })
             .addCase(fetchCurrentUser.pending, (state) => {
                 state.status = 'loading';
@@ -120,6 +123,7 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.status = 'failed';
+                localStorage.removeItem('accessToken');
             });
     },
 });

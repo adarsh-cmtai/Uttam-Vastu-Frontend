@@ -1,14 +1,7 @@
-import axios from 'axios';
-
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard`;
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
+import axiosInstance from './api'; // Naya import
 
 const getDashboardStats = () => {
-    return axiosInstance.get('/stats');
+    return axiosInstance.get('/dashboard/stats');
 }
 
 const dashboardService = {
