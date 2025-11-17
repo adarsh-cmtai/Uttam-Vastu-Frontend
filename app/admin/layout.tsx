@@ -4,18 +4,16 @@ import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { LayoutDashboard, Newspaper, MessageSquare, Briefcase, LogOut, Menu, BookUser } from "lucide-react"
+import { LayoutDashboard, Newspaper, MessageSquare, Briefcase, LogOut, Menu, BookUser, Loader2 } from "lucide-react"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
 import { logoutUser, fetchCurrentUser } from "@/lib/redux/slices/authSlice"
 import toast from "react-hot-toast"
-import { Loader2 } from "lucide-react"
 
 const navLinks = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
   { label: "Join Us Apps", href: "/admin/join-applications", icon: Briefcase },
   { label: "Student Sessions", href: "/admin/student-sessions", icon: BookUser },
-  // { label: "Content", href: "/admin/content", icon: Newspaper },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -31,20 +29,29 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     dispatch(fetchCurrentUser()).finally(() => setIsVerifying(false));
   }, [dispatch]);
 
+  // Yeh useEffect user ko login page par bhejega agar wo authenticated nahi hai
+  useEffect(() => {
+    if (!isVerifying && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isVerifying, isAuthenticated, router]);
+
   const handleLogout = async () => {
     try {
         await dispatch(logoutUser()).unwrap();
         toast.success("Logged out successfully!");
-        window.location.href = '/login';
+        // window.location.href ki jagah router.push ka istemal karein
+        router.push('/login');
     } catch (error) {
         toast.error("Logout failed. Please try again.");
     }
   }
 
-  if (isVerifying) {
+  if (isVerifying || !isAuthenticated) {
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-100 dark:bg-gray-900">
             <Loader2 className="h-12 w-12 animate-spin text-orange-500" />
+            <p className="ml-4">Verifying session...</p>
         </div>
     );
   }
