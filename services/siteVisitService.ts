@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/site-visit`;
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
+import apiClient from './apiClient';
 
 export interface SiteVisitFormData {
     name: string;
@@ -18,16 +11,16 @@ export interface SiteVisitFormData {
 }
 
 const submitApplication = (formData: SiteVisitFormData) => {
-    return axiosInstance.post('/', formData);
+    return apiClient.post('/site-visit/', formData);
 };
 
 const getAllApplications = () => {
-    return axiosInstance.get('/');
-}
+    return apiClient.get('/site-visit/');
+};
 
 const updateStatus = (id: string, status: 'Approved' | 'Scheduled') => {
-    return axiosInstance.patch(`/status/${id}`, { status });
-}
+    return apiClient.patch(`/site-visit/status/${id}`, { status });
+};
 
 const siteVisitService = {
     submitApplication,

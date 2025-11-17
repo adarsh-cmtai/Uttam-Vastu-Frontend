@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/consultation`;
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
+import apiClient from './apiClient';
 
 interface ConsultationFormData {
     name: string;
@@ -23,16 +16,16 @@ interface ReplyData {
 }
 
 const submitConsultationForm = (formData: ConsultationFormData) => {
-    return axiosInstance.post('/request', formData);
+    return apiClient.post('/consultation/request', formData);
 };
 
 const getAllRequests = () => {
-    return axiosInstance.get('/requests');
-}
+    return apiClient.get('/consultation/requests');
+};
 
 const replyToRequest = (requestId: string, replyData: ReplyData) => {
-    return axiosInstance.post(`/reply/${requestId}`, replyData);
-}
+    return apiClient.post(`/consultation/reply/${requestId}`, replyData);
+};
 
 const consultationService = {
     submitConsultationForm,

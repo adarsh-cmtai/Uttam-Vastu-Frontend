@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/live-session`;
-
-const axiosInstance = axios.create({
-    baseURL: API_URL,
-    withCredentials: true,
-});
+import apiClient from './apiClient';
 
 export interface BookingFormData {
     name: string;
@@ -18,16 +11,16 @@ export interface BookingFormData {
 }
 
 const submitBooking = (formData: BookingFormData) => {
-    return axiosInstance.post('/', formData);
+    return apiClient.post('/live-session/', formData);
 };
 
 const getAllBookings = () => {
-    return axiosInstance.get('/');
-}
+    return apiClient.get('/live-session/');
+};
 
 const updateStatus = (id: string, status: 'Confirmed' | 'Completed') => {
-    return axiosInstance.patch(`/status/${id}`, { status });
-}
+    return apiClient.patch(`/live-session/status/${id}`, { status });
+};
 
 const liveSessionService = {
     submitBooking,
