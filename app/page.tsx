@@ -18,7 +18,7 @@ export default function Home() {
       <HoroscopeSection />
       <ServicesSection />
       <TestimonialsSection />
-      <WhyChooseSection />
+      {/* <WhyChooseSection /> */}
       {/* <ProductsSection /> */}
       <Footer />
       <FloatingWhatsApp />

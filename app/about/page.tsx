@@ -32,7 +32,7 @@ export default function About() {
       </div>
 
       <AboutSection />
-      <WhyChooseSection />
+      {/* <WhyChooseSection /> */}
       <TestimonialsSection />
       <FaqSection />
 

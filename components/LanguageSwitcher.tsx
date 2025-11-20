@@ -9,7 +9,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className="hidden md:flex items-center gap-2 text-sm font-semibold text-white hover:text-white/80 transition-colors duration-200 px-4 py-2 rounded-full"
+      className="hidden md:flex items-center gap-2 text-md font-semibold text-white hover:text-white/80 transition-colors duration-200 px-4 py-2 rounded-full"
       aria-label="Toggle language"
     >
       <Globe size={16} />

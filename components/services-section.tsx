@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react";
+import Link from "next/link";
 import { motion, Variants } from "framer-motion"
 import { ClipboardCheckIcon, LaptopIcon } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -47,7 +48,7 @@ export default function ServicesSection() {
               return (
                 <motion.div
                   key={idx}
-                  className="group bg-orange-50/80 backdrop-blur-sm p-6 rounded-xl border border-orange-200/50 shadow-lg shadow-black/10 text-left transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
+                  className="group bg-orange-50/80 backdrop-blur-sm p-6 rounded-xl border border-orange-200/50 shadow-lg shadow-black/10 text-left transition-all duration-300 hover:border-orange-300 hover:bg-orange-50 flex flex-col"
                   variants={itemVariants}
                   whileHover={{ y: -5 }}
                 >
@@ -55,10 +56,10 @@ export default function ServicesSection() {
                     <Icon className="w-6 h-6 text-[#D7281E]" />
                   </div>
                   <h3 className="font-bold text-lg text-stone-900 mb-2">{service.title}</h3>
-                  <p className="text-sm text-stone-700 mb-4 leading-relaxed">{service.description}</p>
-                  <a href="#" className="text-sm font-semibold text-[#D7281E] group-hover:text-stone-900 transition-colors">
+                  <p className="text-sm text-stone-700 mb-4 leading-relaxed flex-grow">{service.description}</p>
+                  <Link href="/about" className="text-sm font-semibold text-[#D7281E] group-hover:text-stone-900 transition-colors mt-auto">
                     {service.linkText} &rarr;
-                  </a>
+                  </Link>
                 </motion.div>
               )
             })}

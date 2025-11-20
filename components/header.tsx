@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, Variants } from "framer-motion"
@@ -36,21 +37,29 @@ export default function Header() {
       <header className={`w-full sticky top-0 z-50 transition-all duration-300 ${ isScrolled ? "h-16 bg-gradient-to-r from-[#D7281E]/90 via-[#F36C2C]/90 to-[#F7A64A]/90 backdrop-blur-lg shadow-xl" : "h-20 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]" }`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
-            <Link href="/" className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "Philosopher, serif" }}>Vastumaye</Link>
+            <Link href="/" className="flex items-baseline gap-2">
+              <Image src="/logo.png" alt="Vastumaye Logo" width={40} height={40} className="h-10 w-auto" />
+              <span className="text-lg font-bold text-white drop-shadow-sm" style={{ fontFamily: "Philosopher, serif" }}>Vastumaye</span>
+            </Link>
             <div className="flex items-center gap-2">
               <nav className="hidden md:flex items-center gap-1">
                 {navLinks.map((link) => (
-                  <Link key={link.name} href={link.href} className={`relative text-sm font-semibold text-white hover:text-white/80 transition-colors duration-200 px-3 py-2 rounded-full ${isActive(link.href) ? "font-bold" : ""}`}>
+                  <Link key={link.name} href={link.href} className={`relative text-md font-semibold text-white hover:text-white/80 transition-colors duration-200 px-3 py-1 rounded-full flex flex-col items-center leading-tight`}>
                     {isActive(link.href) && (<motion.span layoutId="active-pill" className="absolute inset-0 bg-white/10 rounded-full" style={{ zIndex: -1 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} />)}
-                    {link.name}
+                    <span>{link.name}</span>
+                    {link.tag && (
+                        <span className="text-[10px] font-medium text-black/80">{link.tag}</span>
+                    )}
                   </Link>
                 ))}
               </nav>
               <LanguageSwitcher />
-              <Link href="/live-sessions" className="hidden lg:inline-flex items-center gap-2 bg-white text-[#D7281E] font-bold py-2.5 px-6 rounded-full shadow-md hover:bg-white/90 transition-all duration-300 transform hover:scale-105">
-                <CalendarDaysIcon className="w-5 h-5" />
-                {bookNowText}
-              </Link>
+              <motion.div animate={{ y: [0, -3, 0] }} transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }} className="hidden lg:inline-flex">
+                <Link href="/services" className="flex items-center gap-2 bg-white text-[#D7281E] font-bold py-2.5 px-6 rounded-full shadow-md hover:bg-white/90 transition-all duration-300">
+                  <CalendarDaysIcon className="w-5 h-5" />
+                  {bookNowText}
+                </Link>
+              </motion.div>
               <button className="md:hidden w-8 h-8 flex flex-col justify-center items-center gap-1.5 z-50" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
                 <span className={`block w-7 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out ${ menuOpen ? "rotate-45 translate-y-2" : "" }`}></span>
                 <span className={`block w-7 h-0.5 bg-white rounded-full transition-all duration-300 ease-in-out ${ menuOpen ? "opacity-0" : "" }`}></span>
@@ -68,14 +77,15 @@ export default function Header() {
               <motion.nav variants={navContainerVariants} initial="hidden" animate="visible" className="flex flex-col items-center gap-8">
                 {navLinks.map((link) => (
                   <motion.div variants={navItemVariants} key={link.name}>
-                    <Link href={link.href} onClick={() => setMenuOpen(false)} className={`text-3xl font-bold transition-opacity ${ isActive(link.href) ? "text-white opacity-100" : "text-white opacity-70 hover:opacity-100" }`}>
-                      {link.name}
+                    <Link href={link.href} onClick={() => setMenuOpen(false)} className={`text-3xl font-bold transition-opacity ${ isActive(link.href) ? "text-white opacity-100" : "text-white opacity-70 hover:opacity-100" } flex flex-col items-center leading-tight`}>
+                      <span>{link.name}</span>
+                      {link.tag && (<span className="text-lg font-normal text-black/70 -mt-1">{link.tag}</span>)}
                     </Link>
                   </motion.div>
                 ))}
               </motion.nav>
               <motion.div className="flex flex-col items-center gap-8" initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{delay: 0.6, ease: "easeOut"}}>
-                 <Link href="/live-sessions" onClick={() => setMenuOpen(false)} className="w-full max-w-sm text-center bg-white text-[#D7281E] font-bold py-4 px-10 rounded-full text-lg shadow-lg">
+                 <Link href="/services" onClick={() => setMenuOpen(false)} className="w-full max-w-sm text-center bg-white text-[#D7281E] font-bold py-4 px-10 rounded-full text-lg shadow-lg">
                   {bookNowText}
                 </Link>
                 <hr className="w-full max-w-xs border-white/20"/>

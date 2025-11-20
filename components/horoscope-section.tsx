@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react";
+import Link from "next/link";
 import { motion, Variants } from "framer-motion"
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -52,23 +53,23 @@ export default function VastuServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {vastuServices.map((service, index) => (
-            <motion.a
-              key={index}
-              href="#"
-              className="group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 text-center cursor-pointer shadow-lg shadow-black/10 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50"
-              variants={cardVariants}
-              whileHover={{ y: -5 }}
-            >
-              <div className="text-6xl mb-3 font-serif text-white transition-all duration-300 group-hover:scale-110 group-hover:text-[#D7281E]">
-                {service.symbol}
-              </div>
-              <h4 className="font-bold text-lg text-white mb-1 transition-colors duration-300 group-hover:text-stone-900">
-                {service.name}
-              </h4>
-              <p className="text-sm text-white/80 transition-colors duration-300 group-hover:text-stone-700">
-                {service.description}
-              </p>
-            </motion.a>
+            <Link key={index} href="/services" passHref legacyBehavior>
+                <motion.a
+                  className="group bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 text-center cursor-pointer shadow-lg shadow-black/10 transition-all duration-300 hover:border-orange-300 hover:bg-orange-50 h-full flex flex-col justify-center"
+                  variants={cardVariants}
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="text-6xl mb-3 font-serif text-white transition-all duration-300 group-hover:scale-110 group-hover:text-[#D7281E]">
+                    {service.symbol}
+                  </div>
+                  <h4 className="font-bold text-lg text-white mb-1 transition-colors duration-300 group-hover:text-stone-900">
+                    {service.name}
+                  </h4>
+                  <p className="text-sm text-white/80 transition-colors duration-300 group-hover:text-stone-700">
+                    {service.description}
+                  </p>
+                </motion.a>
+            </Link>
           ))}
         </motion.div>
       </div>

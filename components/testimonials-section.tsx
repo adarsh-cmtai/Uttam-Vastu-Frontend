@@ -30,9 +30,9 @@ export default function TestimonialsSection() {
   const current = ((page % testimonials.length) + testimonials.length) % testimonials.length
 
   useEffect(() => {
-    const interval = setInterval(() => { paginate(1) }, 5000)
+    const interval = setInterval(() => { paginate(1) }, 6000) // Interval thoda badha diya
     return () => clearInterval(interval)
-  }, [page])
+  }, [page, testimonials.length])
   
   return (
     <section className="py-12 sm:py-16 bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
@@ -46,7 +46,7 @@ export default function TestimonialsSection() {
             {content.description}
           </p>
         </div>
-        <div className="max-w-3xl mx-auto relative h-80 flex items-center justify-center overflow-hidden">
+        <div className="max-w-3xl mx-auto relative min-h-[24rem] flex items-center justify-center overflow-hidden">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={page}
@@ -65,12 +65,14 @@ export default function TestimonialsSection() {
               }}
               className="absolute w-full max-w-2xl bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl"
             >
-              <img src={testimonials[current].image} alt={testimonials[current].name} className="w-20 h-20 rounded-full object-cover border-4 border-white mb-4" />
-              <div className="flex gap-1 mb-3">
+              <img src={testimonials[current].image} alt={testimonials[current].name} className="w-20 h-20 rounded-full object-cover border-4 border-white mb-4 flex-shrink-0" />
+              <div className="flex gap-1 mb-3 flex-shrink-0">
                 {[...Array(5)].map((_, i) => ( <StarIcon key={i} /> ))}
               </div>
-              <p className="text-lg text-white mb-4 leading-relaxed h-24 sm:h-20">"{testimonials[current].text}"</p>
-              <h4 className="text-xl font-bold text-white tracking-wide">{testimonials[current].name}</h4>
+              <div className="flex-grow overflow-y-auto">
+                <p className="text-base sm:text-lg text-white mb-4 leading-relaxed">"{testimonials[current].text}"</p>
+              </div>
+              <h4 className="text-lg sm:text-xl font-bold text-white tracking-wide mt-2 flex-shrink-0">{testimonials[current].name}</h4>
             </motion.div>
           </AnimatePresence>
         </div>
