@@ -72,7 +72,7 @@ export default function VastuConsultationForm() {
             <div className="p-8 md:p-12">
               <h2 className="text-3xl font-extrabold text-white mb-4 font-serif drop-shadow-md">{t.servicesPage.form.title}</h2>
               <p className="text-white/90 mb-8 text-lg leading-relaxed drop-shadow-sm">{t.servicesPage.form.description}</p>
-              <img src="/meditation-spiritual-astrology.jpg" alt="Vastu Consultation Plan" className="w-full rounded-full shadow-lg mb-8 aspect-square object-cover" />
+              <img src="/service1.jpg" alt="Vastu Consultation Plan" className="w-full rounded-full shadow-lg mb-8 aspect-square object-cover" />
               <div className="mt-8">
                 <h3 className="font-bold text-white mb-4">{t.servicesPage.form.connectTitle}</h3>
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
