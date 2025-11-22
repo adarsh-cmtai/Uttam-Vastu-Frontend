@@ -17,7 +17,7 @@ export const homeContent = {
           href: "/services" // Link for the second button
         },
         { 
-          preHeading: "Ancient Wisdom from the Atharva Veda", 
+          preHeading: "Ancient Wisdom from Atharva Veda", 
           heading: "The Timeless Boon of Vastu Purush", 
           description: `वर तस्मे दादो प्रीतो ब्रम्ह लोक पितामहः ।\nग्रामे वा नगरे वापि दुर्गे वा पतनेयपि वा ॥\nप्रसादे च प्रपायन च जलोद्द्यां तथा च ।\nयस्त्वा न पुजयेन्मयो मोहद्वस्तुनर् प्रभो ॥\nआ श्री मृत्योमाप्नोति विध्नस्तस्य पदे पदे ।\nवास्तुपुजमकुर्वान्स्तवाहरो भविष्यत्येति ॥\n\nLord Bramha's decree: Honoring Vastu Purush at the start of any construction brings prosperity and peace, while forgetting him can lead to hurdles and poverty.`, 
           buttonText: "Get a Consultation",

@@ -40,7 +40,7 @@ export default function VastuServicesSection() {
             {content.title}
           </h1>
           <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">
+          <p className="max-w-3xl mx-auto text-xl leading-relaxed text-white drop-shadow-sm">
             {content.description}
           </p>
         </div>

@@ -184,11 +184,11 @@ export default function HeroSlider() {
           <div className="absolute top-0 right-0 h-full w-1/3 md:w-2/5"><FallingFlowers count={30} position="right" /></div>
         </div>
         <div className="w-full relative z-0">
-          <img src="/Vastumaye landing page animation/Vastumaye landing page animation 6.gif" alt="Vastumaye - Vastu Shastra for Harmony" className="w-full h-auto" />
+          <img src="/Vastumaye landing page animation 9/Vastumaye landing page animation 9.gif" alt="Vastumaye - Vastu Shastra for Harmony" className="w-full h-auto" />
         </div>
         <div className="max-w-4xl mx-auto px-6 lg:px-8 w-full text-center py-12 lg:py-16 relative z-20">
           <div key={current}>
-            <p className="font-semibold text-stone-900 uppercase tracking-widest mb-4">{currentSlide.preHeading}</p>
+            <p className="font-semibold text-stone-900 uppercase tracking-widest mb-4 text-lg">{currentSlide.preHeading}</p>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-stone-900 mb-6 leading-tight font-serif drop-shadow-md">{currentSlide.heading}</h1>
             <div className="flex justify-center"><div className="w-24 h-1.5 bg-gradient-to-r from-white/80 to-white rounded-full mb-8"></div></div>
             <p className="text-lg text-white text-xl max-w-3xl mx-auto mb-10 leading-relaxed whitespace-pre-line">{currentSlide.description}</p>

@@ -18,12 +18,12 @@ export default function AboutSection() {
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-stone-900 mb-4 tracking-tight font-serif drop-shadow-md">{content.title}</h1>
           <div className="mx-auto w-24 h-1 bg-white/30 rounded-full mb-6"></div>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-white drop-shadow-sm">{content.description}</p>
+          <p className="max-w-3xl mx-auto text-xl leading-relaxed text-white drop-shadow-sm">{content.description}</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div className="relative flex justify-center items-center" variants={imageVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <div className="absolute w-[90%] h-[90%] bg-white/10 rounded-full transform rotate-[90deg]"></div>
-            <img src="/about2.jpg" alt="Vastumaye Vastu Master" className="relative w-full max-w-lg h-auto rounded-full shadow-2xl object-cover aspect-square" />
+            <img src="/image1.jpg" alt="Vastumaye Vastu Master" className="relative w-full max-w-lg h-auto rounded-full object-cover aspect-square" />
           </motion.div>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             <motion.h2 variants={itemVariants} className="text-3xl font-bold text-white mb-6 font-serif">{content.whoWeAreTitle}</motion.h2>

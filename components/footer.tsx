@@ -13,12 +13,14 @@ export default function Footer() {
     <footer className="bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          
+
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-2xl font-bold text-white mb-4 font-serif drop-shadow-md">
-              VastuMaye
-            </h3>
-            <p className="text-sm text-white/90 mb-6 max-w-xs drop-shadow-sm">
+            <img
+              src="/Logo2.png"   // yaha apni image ka path/gif do
+              alt="VastuMaye"
+              className="w-[200px] h-[110px] -mb-6 -mt-10 drop-shadow-md"
+            />
+            <p className="text-md text-white/90 mb-6 max-w-xs drop-shadow-sm">
               {content.description}
             </p>
             <div className="flex items-center gap-4">
@@ -35,8 +37,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.quickLinksTitle}</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="font-bold text-white uppercase text-lg tracking-wider mb-4">{content.quickLinksTitle}</h4>
+            <ul className="space-y-3 text-md">
               {content.links.map(link => (
                 <li key={link.text}><Link href={link.href} className="text-white/80 hover:text-white transition-colors">{link.text}</Link></li>
               ))}
@@ -44,8 +46,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.ourServicesTitle}</h4>
-            <ul className="space-y-3 text-sm">
+            <h4 className="font-bold text-white uppercase text-lg tracking-wider mb-4">{content.ourServicesTitle}</h4>
+            <ul className="space-y-3 text-md">
               {content.services.map(service => (
                 <li key={service.text}><Link href={service.href} className="text-white/80 hover:text-white transition-colors">{service.text}</Link></li>
               ))}
@@ -53,8 +55,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-bold text-white uppercase text-sm tracking-wider mb-4">{content.contactUsTitle}</h4>
-            <ul className="space-y-4 text-sm">
+            <h4 className="font-bold text-white uppercase text-lg tracking-wider mb-4">{content.contactUsTitle}</h4>
+            <ul className="space-y-4 text-md">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-white/80 mt-0.5 shrink-0" />
                 <span className="text-white/80">{content.address}</span>
