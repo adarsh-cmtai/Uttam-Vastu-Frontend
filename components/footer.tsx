@@ -16,7 +16,7 @@ export default function Footer() {
 
           <div className="col-span-2 md:col-span-1">
             <img
-              src="/Logo2.png"   // yaha apni image ka path/gif do
+              src="/Logo2.PNG"   // yaha apni image ka path/gif do
               alt="VastuMaye"
               className="w-[200px] h-[110px] -mb-6 -mt-10 drop-shadow-md"
             />
