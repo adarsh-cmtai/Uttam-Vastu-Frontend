@@ -40,7 +40,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
             <Link href="/" className="flex items-baseline gap-2">
-              <Image src="/Logo2.png" alt="Vastumaye Logo" width={60} height={60} className="h-28 w-auto" />
+              <Image src="/Logo2.PNG" alt="Vastumaye Logo" width={60} height={60} className="h-28 w-auto" />
             </Link>
             <div className="flex items-center gap-2">
               <nav className="hidden md:flex items-baseline gap-1">
