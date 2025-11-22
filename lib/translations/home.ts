@@ -11,7 +11,7 @@ export const homeContent = {
         },
         { 
           preHeading: "A Blueprint for a Fulfilling Life", 
-          heading: "Have your space Vastu optimised for you to Dharma, Artha, Kama, Moksha", 
+          heading: "Have your space Vastu optimised for you to achieve your Dharma, Artha, Kama, Moksha", 
           description: "Fulfill your life's duties and goals. Vastu guides you to attain material gains, enjoy them rightfully, and seek salvation through a balanced and harmonious environment.", 
           buttonText: "Explore Our Vastu Services",
           href: "/services" // Link for the second button
