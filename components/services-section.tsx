@@ -40,7 +40,7 @@ export default function ServicesSection() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div className="flex justify-center" variants={imageVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
-            <img src="/vastu purush1.jpg" alt="Spiritual harmony and balance achieved through Vastu principles" className="w-full h-auto max-w-xl rounded-full object-cover" />
+            <img src="/service2.gif" alt="Spiritual harmony and balance achieved through Vastu principles" className="w-full h-auto max-w-xl rounded-full object-cover" />
           </motion.div>
           <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-6" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             {services.map((service: Service, idx: number) => {
