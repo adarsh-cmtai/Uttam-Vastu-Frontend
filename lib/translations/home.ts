@@ -29,6 +29,7 @@ export const homeContent = {
       title: "Our Core Vastu Services",
       description: "We apply the timeless principles of Vastu Shastra to harmonize every aspect of your life, ensuring your space nurtures peace, attracts prosperity, and enhances well-being.",
       btnText: "View All Services",
+      btnText1: "Book Now",
       services: [
         { 
           name: "Residential Vastu", 
@@ -137,6 +138,7 @@ export const homeContent = {
       title: "हमारी मुख्य वास्तु सेवाएँ",
       description: "हम आपके जीवन के हर पहलू में सामंजस्य स्थापित करने के लिए वास्तु शास्त्र के शाश्वत सिद्धांतों को लागू करते हैं, यह सुनिश्चित करते हुए कि आपका स्थान शांति का पोषण करे, समृद्धि को आकर्षित करे और कल्याण को बढ़ाए।",
       btnText: "सभी सेवाएं देखें",
+      btnText1: "अभी बुक करें",
       services: [
         { 
             name: "आवासीय वास्तु", 

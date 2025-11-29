@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Link from "next/link";
 
 const gridVariants: Variants = {
   hidden: { opacity: 0 },
@@ -142,10 +143,16 @@ export default function VastuServicesSection() {
                   <div className="mt-8">
                     <button 
                         onClick={handleClose}
-                        className="px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300"
+                        className="px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                         {content.btnText}
                     </button>
+                    <Link
+                        href="/services"
+                        className="ml-2 px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                        {content.btnText1}
+                    </Link>
                   </div>
                 </div>
               </motion.div>

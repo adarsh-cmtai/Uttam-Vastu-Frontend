@@ -80,6 +80,11 @@ export default function VastuConsultationForm() {
                   <a href="tel:+917303062088" className="inline-flex items-center justify-center gap-3 text-white/80 font-semibold hover:text-white transition-colors"><Phone className="w-5 h-5" /><span>{t.servicesPage.form.callButton}</span></a>
                 </div>
               </div>
+              <img 
+                src="/QR.JPG" 
+                alt="Contact Decoration" 
+                className="absolute bottom-20 left-96 w-36 h-36 opacity-80 pointer-events-none drop-shadow-lg"
+              />
             </div>
             <div className="p-8 md:p-12">
               <form onSubmit={handleSubmit} className="space-y-6">

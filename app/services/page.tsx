@@ -26,6 +26,7 @@ export default function Services() {
             <span className="text-white font-semibold">{t.servicesPage.breadcrumbCurrent}</span>
           </div>
         </div>
+        
       </div>
 
       <div className="bg-gradient-to-r from-[#D7281E] via-[#F36C2C] to-[#F7A64A] pt-0 pb-16">

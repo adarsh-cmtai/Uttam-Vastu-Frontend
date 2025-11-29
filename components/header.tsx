@@ -84,10 +84,10 @@ export default function Header() {
         {menuOpen && (
           <motion.div variants={menuVariants} initial="hidden" animate="visible" exit="hidden" className="fixed inset-0 z-40 bg-gradient-to-br from-[#D7281E]/95 via-[#F36C2C]/95 to-[#F7A64A]/95 backdrop-blur-xl md:hidden">
             <div className="h-full flex flex-col justify-center p-8">
-              <motion.nav variants={navContainerVariants} initial="hidden" animate="visible" className="flex flex-col items-center gap-8 mb-16">
+              <motion.nav variants={navContainerVariants} initial="hidden" animate="visible" className="flex flex-col items-center gap-8 mb-1 mt-16">
                 {navLinks.map((link) => (
                   <motion.div variants={navItemVariants} key={link.name}>
-                    <Link href={link.href} onClick={() => setMenuOpen(false)} className={`relative text-3xl font-bold transition-opacity ${ isActive(link.href) ? "text-white opacity-100" : "text-white opacity-70 hover:opacity-100" }`}>
+                    <Link href={link.href} onClick={() => setMenuOpen(false)} className={`relative text-2xl font-bold transition-opacity ${ isActive(link.href) ? "text-white opacity-100" : "text-white opacity-70 hover:opacity-100" }`}>
                       <span>{link.name}</span>
                       {link.tag && (
                         <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-base font-normal text-black/70">
@@ -98,10 +98,10 @@ export default function Header() {
                   </motion.div>
                 ))}
               </motion.nav>
-              <motion.div className="flex flex-col items-center gap-6" initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{delay: 0.6, ease: "easeOut"}}>
+              <motion.div className="flex flex-col items-center gap-8" initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{delay: 0.6, ease: "easeOut"}}>
                 <button 
                   onClick={() => { toggleLanguage(); setMenuOpen(false); }} 
-                  className="font-bold text-xl text-white/80 hover:text-white bg-white/10 py-3 px-8 rounded-full transition-all"
+                  className="font-bold text-xl text-white/80 hover:text-white bg-white/10 py-3 px-8 mt-6 rounded-full transition-all"
                 >
                   {language === 'en' ? 'हिन्दी में बदलें' : 'Switch to English'}
                 </button>

@@ -53,6 +53,7 @@ export default function Contact() {
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl p-8 sm:p-12 rounded-2xl">
+            
             <div>
               <h2 className="text-3xl font-bold text-white mb-2 font-serif drop-shadow-md">{t.contactPage.formTitle}</h2>
               <div className="h-1 bg-white/30 rounded mb-8 w-24"></div>
@@ -74,9 +75,45 @@ export default function Contact() {
               </form>
               )}
             </div>
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-2 font-serif drop-shadow-md">{t.contactPage.infoTitle}</h2><div className="h-1 bg-white/30 rounded mb-8 w-24"></div><div className="space-y-8 mb-12"><div className="flex gap-4 items-start"><div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><MapPin className="w-6 h-6 text-white" /></div><div><h4 className="font-bold text-white">{t.contactPage.infoAddressTitle}</h4><p className="text-white/80">{t.contactPage.infoAddressText}</p></div></div><div className="flex gap-4 items-start"><div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><Phone className="w-6 h-6 text-white" /></div><div><h4 className="font-bold text-white">{t.contactPage.infoPhoneTitle}</h4><p className="text-white/80">+91 73030 62088</p></div></div><div className="flex gap-4 items-start"><div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><Mail className="w-6 h-6 text-white" /></div><div><h4 className="font-bold text-white">{t.contactPage.infoEmailTitle}</h4><p className="text-white/80">vastumaye@gmail.com</p></div></div></div><div className="mb-8"><h4 className="font-bold mb-4 text-white">{t.contactPage.infoFollowTitle}</h4><div className="flex gap-4"><a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Facebook /></a><a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Instagram /></a><a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Youtube /></a><a href="https://wa.me/917303062088" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><MessageSquare /></a></div></div>
+
+            <div className="relative overflow-hidden">
+              <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-white mb-2 font-serif drop-shadow-md">{t.contactPage.infoTitle}</h2>
+                <div className="h-1 bg-white/30 rounded mb-8 w-24"></div>
+                
+                <div className="space-y-8 mb-12">
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><MapPin className="w-6 h-6 text-white" /></div>
+                    <div><h4 className="font-bold text-white">{t.contactPage.infoAddressTitle}</h4><p className="text-white/80">{t.contactPage.infoAddressText}</p></div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><Phone className="w-6 h-6 text-white" /></div>
+                    <div><h4 className="font-bold text-white">{t.contactPage.infoPhoneTitle}</h4><p className="text-white/80">+91 73030 62088</p></div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><Mail className="w-6 h-6 text-white" /></div>
+                    <div><h4 className="font-bold text-white">{t.contactPage.infoEmailTitle}</h4><p className="text-white/80">vastumaye@gmail.com</p></div>
+                  </div>
+                </div>
+
+                <div className="mb-8">
+                  <h4 className="font-bold mb-4 text-white">{t.contactPage.infoFollowTitle}</h4>
+                  <div className="flex gap-4">
+                    <a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Facebook /></a>
+                    <a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Instagram /></a>
+                    <a href="#" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><Youtube /></a>
+                    <a href="https://wa.me/917303062088" className="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white hover:bg-white/30 transition"><MessageSquare /></a>
+                  </div>
+                </div>
+              </div>
+
+              <img 
+                src="/QR.JPG" 
+                alt="Contact Decoration" 
+                className="absolute top-20 -bottom-0 right-16 w-40 h-40 opacity-80 pointer-events-none drop-shadow-lg"
+              />
             </div>
+
           </div>
         </div>
       </section>

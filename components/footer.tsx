@@ -16,7 +16,7 @@ export default function Footer() {
 
           <div className="col-span-2 md:col-span-1">
             <img
-              src="/Logo2.PNG"   // yaha apni image ka path/gif do
+              src="/Logo2.PNG"
               alt="VastuMaye"
               className="w-[200px] h-[110px] -mb-6 -mt-10 drop-shadow-md"
             />
@@ -77,9 +77,18 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/20 text-center text-sm text-white/70">
-          <p>&copy; {new Date().getFullYear()} VastuMaye. {content.copyright}</p>
-          <p className="mt-2 font-serif">{content.tagline}</p>
+        <div className="mt-16 pt-8 border-t border-white/20 relative flex flex-col items-center justify-center">
+          
+          <img 
+            src="/QR.JPG" 
+            alt="Left Corner" 
+            className="w-24 h-auto mb-4 md:mb-0 md:absolute md:left-0 md:top-8"
+          />
+
+          <div className="text-center text-sm text-white/70 w-full">
+            <p>&copy; {new Date().getFullYear()} VastuMaye. {content.copyright}</p>
+            <p className="mt-2 font-serif">{content.tagline}</p>
+          </div>
         </div>
       </div>
     </footer>

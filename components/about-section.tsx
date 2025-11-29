@@ -23,7 +23,7 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <motion.div className="relative flex justify-center items-center" variants={imageVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <div className="absolute w-[90%] h-[90%] bg-white/10 rounded-full transform rotate-[0deg]"></div>
-            <img src="/Vastumaye Webpage pic 2.gif" alt="Vastumaye Vastu Master" className="relative w-[900px] h-[400px] rounded-full object-cover aspect-video" />
+            <img src="/about6.JPG" alt="Vastumaye Vastu Master" className="relative w-[900px] h-[400px] rounded-full object-cover aspect-video" />
           </motion.div>
           <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             <motion.h2 variants={itemVariants} className="text-3xl font-bold text-white mb-6 font-serif">{content.whoWeAreTitle}</motion.h2>

@@ -46,7 +46,7 @@ export default function TestimonialsSection() {
             {content.description}
           </p>
         </div>
-        <div className="max-w-3xl mx-auto relative min-h-[24rem] flex items-center justify-center overflow-hidden">
+        <div className="max-w-3xl mx-auto relative min-h-[32rem] flex items-center justify-center overflow-hidden">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={page}
