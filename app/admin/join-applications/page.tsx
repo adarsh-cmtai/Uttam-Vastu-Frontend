@@ -23,6 +23,15 @@ const statusConfig = {
   'Rejected': { color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300', icon: X },
 }
 
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+    });
+};
+
 export default function JoinApplicationsPage() {
   const [activeTab, setActiveTab] = useState('New Applications');
   const [applications, setApplications] = useState<Application[]>([]);
@@ -167,7 +176,7 @@ export default function JoinApplicationsPage() {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">{app.qualifications}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{app.experience}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(app.createdAt).toLocaleDateString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(app.createdAt)}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold rounded-full ${statusInfo.color}`}>
                           <statusInfo.icon className="h-3 w-3" />
@@ -231,7 +240,7 @@ export default function JoinApplicationsPage() {
                      <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex items-center justify-between rounded-b-xl">
                         <div>
                             <p className="text-xs text-gray-500 dark:text-gray-400">Joined On</p>
-                            <p className="text-sm font-semibold text-gray-800 dark:text-white">{new Date(consultant.createdAt).toLocaleDateString()}</p>
+                            <p className="text-sm font-semibold text-gray-800 dark:text-white">{formatDate(consultant.createdAt)}</p>
                         </div>
                         <button className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500">
                             View Profile

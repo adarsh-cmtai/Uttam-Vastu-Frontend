@@ -20,6 +20,15 @@ const siteVisitStatusConfig = {
   'Scheduled': { color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300', icon: Calendar },
 }
 
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+    });
+};
+
 export default function StudentTrainingPage() {
   const [activeTab, setActiveTab] = useState('Live Session Bookings')
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -199,7 +208,7 @@ export default function StudentTrainingPage() {
                           <div><strong>Qual:</strong> {booking.qualifications}</div>
                           <div><strong>Exp:</strong> {booking.experience}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(booking.createdAt).toLocaleDateString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(booking.createdAt)}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold rounded-full ${statusInfo.color}`}>
                               <statusInfo.icon className="h-3 w-3" />{booking.status}
@@ -268,7 +277,7 @@ export default function StudentTrainingPage() {
                       <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{app.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{app.contact}</div><div className="text-sm text-gray-500 dark:text-gray-400">{app.location}</div></td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{app.chosenPackage}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><div><strong>Qual:</strong> {app.qualifications}</div><div><strong>Exp:</strong> {app.experience}</div></td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(app.createdAt).toLocaleDateString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(app.createdAt)}</td>
                       <td className="px-6 py-4 whitespace-nowrap"><span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold rounded-full ${statusInfo.color}`}><statusInfo.icon className="h-3 w-3" />{app.status}</span></td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
                         <button onClick={() => setOpenMenuId(openMenuId === app._id ? null : app._id)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"><MoreVertical className="h-5 w-5"/></button>

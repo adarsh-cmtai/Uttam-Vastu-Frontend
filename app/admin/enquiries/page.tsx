@@ -16,7 +16,16 @@ const statusColors = {
   Resolved: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
 }
 
-const DetailsModal = ({ request, onClose }: { request: ConsultationRequest; onClose: () => void; }) => ( <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}> <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6" onClick={e => e.stopPropagation()}> <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Consultation Details</h2> <div className="space-y-4 text-sm"> <div> <h3 className="font-semibold text-gray-500">Client Info</h3> <p><strong>Name:</strong> {request.name}</p> <p><strong>Email:</strong> {request.email}</p> <p><strong>Phone:</strong> {request.phone}</p> <p><strong>City:</strong> {request.city}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Request Info</h3> <p><strong>Purpose:</strong> {request.purpose}</p> <p><strong>Property Type:</strong> {request.propertyType}</p> <p><strong>Submitted On:</strong> {new Date(request.createdAt).toLocaleString()}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Comments</h3> <p className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md whitespace-pre-wrap">{request.comments || 'No comments provided.'}</p> </div> </div> <div className="mt-6 text-right"> <button onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md font-semibold hover:bg-gray-300 dark:hover:bg-gray-500">Close</button> </div> </div> </div> )
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+    });
+};
+
+const DetailsModal = ({ request, onClose }: { request: ConsultationRequest; onClose: () => void; }) => ( <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}> <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6" onClick={e => e.stopPropagation()}> <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Consultation Details</h2> <div className="space-y-4 text-sm"> <div> <h3 className="font-semibold text-gray-500">Client Info</h3> <p><strong>Name:</strong> {request.name}</p> <p><strong>Email:</strong> {request.email}</p> <p><strong>Phone:</strong> {request.phone}</p> <p><strong>City:</strong> {request.city}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Request Info</h3> <p><strong>Purpose:</strong> {request.purpose}</p> <p><strong>Property Type:</strong> {request.propertyType}</p> <p><strong>Submitted On:</strong> {formatDate(request.createdAt)}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Comments</h3> <p className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md whitespace-pre-wrap">{request.comments || 'No comments provided.'}</p> </div> </div> <div className="mt-6 text-right"> <button onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md font-semibold hover:bg-gray-300 dark:hover:bg-gray-500">Close</button> </div> </div> </div> )
 
 const ReplyModal = ({ 
     target, 
@@ -270,7 +279,7 @@ export default function EnquiriesPage() {
                             <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{req.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{req.email}</div><div className="text-sm text-gray-500 dark:text-gray-400">{req.phone}</div></td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{req.propertyType}</td>
                             <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">{req.purpose}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(req.createdAt).toLocaleDateString()}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(req.createdAt)}</td>
                             <td className="px-6 py-4 whitespace-nowrap"><span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${statusColors[req.status]}`}>{req.status}</span></td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
                                 <button onClick={() => setOpenMenuId(openMenuId === req._id ? null : req._id)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"><MoreVertical className="h-5 w-5"/></button>
@@ -319,7 +328,7 @@ export default function EnquiriesPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{enq.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{enq.email}</div><div className="text-sm text-gray-500 dark:text-gray-400">{enq.phone}</div></td>
                     <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-sm truncate">{enq.subject}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(enq.createdAt).toLocaleDateString()}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{formatDate(enq.createdAt)}</td>
                     <td className="px-6 py-4 whitespace-nowrap"><span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${statusColors[enq.status]}`}>{enq.status}</span></td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium relative">
                       <button onClick={() => setOpenMenuId(openMenuId === enq._id ? null : enq._id)} className="text-gray-500 hover:text-gray-700"><MoreVertical className="h-5 w-5"/></button>
