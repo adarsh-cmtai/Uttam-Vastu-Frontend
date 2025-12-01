@@ -27,10 +27,15 @@ const replyToRequest = (requestId: string, replyData: ReplyData) => {
     return apiClient.post(`/consultation/reply/${requestId}`, replyData);
 };
 
+const deleteRequests = (ids: string[]) => {
+    return apiClient.delete('/consultation/requests', { data: { ids } });
+};
+
 const consultationService = {
     submitConsultationForm,
     getAllRequests,
     replyToRequest,
+    deleteRequests
 };
 
 export default consultationService;

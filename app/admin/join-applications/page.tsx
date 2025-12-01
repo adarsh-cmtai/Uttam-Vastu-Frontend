@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { MoreVertical, Check, X, Clock, UserCheck, Star, Briefcase, Eye } from 'lucide-react'
+import { MoreVertical, Check, X, Clock, UserCheck, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import applicationService from '@/services/applicationService'
 
@@ -23,17 +23,15 @@ const statusConfig = {
   'Rejected': { color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300', icon: X },
 }
 
-const Tabs = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTab: (tab: string) => void }) => { /* No change here */ }
-
-const ApplicationDetailsModal = ({ app, onClose }: { app: Application; onClose: () => void; }) => { /* Modal component for details */ }
-
-
 export default function JoinApplicationsPage() {
   const [activeTab, setActiveTab] = useState('New Applications');
   const [applications, setApplications] = useState<Application[]>([]);
   const [approved, setApproved] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchApplications = async () => {
     setLoading(true);
@@ -51,22 +49,76 @@ export default function JoinApplicationsPage() {
 
   useEffect(() => { fetchApplications() }, []);
 
+  useEffect(() => {
+    setSelectedItems([]);
+  }, [activeTab]);
+
   const handleStatusUpdate = async (id: string, status: 'Approved' | 'Rejected') => {
     try {
         await applicationService.updateStatus(id, status);
         toast.success(`Application has been ${status.toLowerCase()}.`);
-        fetchApplications(); // Refetch data to update lists
+        fetchApplications();
     } catch (error) {
         toast.error("Failed to update status.");
     }
     setOpenMenuId(null);
   }
 
+  const handleSelectAll = () => {
+    const currentList = activeTab === 'New Applications' ? applications : approved;
+    if (selectedItems.length === currentList.length) {
+        setSelectedItems([]);
+    } else {
+        setSelectedItems(currentList.map(app => app._id));
+    }
+  }
+
+  const handleSelectItem = (id: string) => {
+    if (selectedItems.includes(id)) {
+        setSelectedItems(selectedItems.filter(item => item !== id));
+    } else {
+        setSelectedItems([...selectedItems, id]);
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (!confirm(`Are you sure you want to delete ${selectedItems.length} selected items? This cannot be undone.`)) return;
+    
+    setIsDeleting(true);
+    try {
+        await applicationService.deleteApplications(selectedItems);
+        toast.success("Selected items deleted successfully.");
+        
+        if (activeTab === 'New Applications') {
+            setApplications(prev => prev.filter(app => !selectedItems.includes(app._id)));
+        } else {
+            setApproved(prev => prev.filter(app => !selectedItems.includes(app._id)));
+        }
+        setSelectedItems([]);
+    } catch (error) {
+        toast.error("Failed to delete selected items.");
+    } finally {
+        setIsDeleting(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Team & Consultant Management</h1>
-        <p className="mt-1 text-gray-600 dark:text-gray-400">Review applications and manage your network of Vastu experts.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Team & Consultant Management</h1>
+            <p className="mt-1 text-gray-600 dark:text-gray-400">Review applications and manage your network of Vastu experts.</p>
+        </div>
+        {selectedItems.length > 0 && (
+            <button 
+                onClick={handleBulkDelete} 
+                disabled={isDeleting}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-500 transition-colors shadow-sm"
+            >
+                <Trash2 size={18} />
+                {isDeleting ? 'Deleting...' : `Delete ${selectedItems.length} Selected`}
+            </button>
+        )}
       </div>
       
       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
@@ -79,6 +131,14 @@ export default function JoinApplicationsPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
+                  <th scope="col" className="px-6 py-3">
+                    <input 
+                        type="checkbox" 
+                        checked={applications.length > 0 && selectedItems.length === applications.length}
+                        onChange={handleSelectAll}
+                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                    />
+                  </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Applicant</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Qualifications</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Experience</th>
@@ -88,10 +148,18 @@ export default function JoinApplicationsPage() {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {loading ? (<tr><td colSpan={6} className="text-center py-10">Loading...</td></tr>) : applications.map((app) => {
+                {loading ? (<tr><td colSpan={7} className="text-center py-10">Loading...</td></tr>) : applications.length === 0 ? (<tr><td colSpan={7} className="text-center py-10">No applications found.</td></tr>) : applications.map((app) => {
                   const statusInfo = statusConfig[app.status];
                   return (
-                    <tr key={app._id}>
+                    <tr key={app._id} className={selectedItems.includes(app._id) ? 'bg-orange-50 dark:bg-orange-900/10' : ''}>
+                      <td className="px-6 py-4">
+                        <input 
+                            type="checkbox" 
+                            checked={selectedItems.includes(app._id)}
+                            onChange={() => handleSelectItem(app._id)}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900 dark:text-white">{app.name}</div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">{app.contact}</div>
@@ -124,31 +192,54 @@ export default function JoinApplicationsPage() {
         )}
 
         {activeTab === 'Approved Consultants' && (
-          <div className="p-4 sm:p-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-             {loading ? (<p>Loading consultants...</p>) : approved.map((consultant) => (
-               <div key={consultant._id} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm transition-shadow hover:shadow-md">
-                 <div className="p-6">
-                    <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-4">
-                            <UserCheck className="h-10 w-10 text-orange-500" />
-                            <div>
-                                <h3 className="text-lg font-bold text-gray-900 dark:text-white">{consultant.name}</h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">{consultant.state}</p>
+          <div className="p-4 sm:p-6">
+             <div className="flex items-center mb-4 gap-2">
+                <input 
+                    type="checkbox"
+                    checked={approved.length > 0 && selectedItems.length === approved.length}
+                    onChange={handleSelectAll}
+                    id="selectAllApproved"
+                    className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-5 h-5 cursor-pointer"
+                />
+                <label htmlFor="selectAllApproved" className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer">Select All Consultants</label>
+             </div>
+             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                 {loading ? (<p>Loading consultants...</p>) : approved.length === 0 ? (<p className="text-gray-500">No approved consultants yet.</p>) : approved.map((consultant) => (
+                   <div 
+                      key={consultant._id} 
+                      className={`relative rounded-xl border transition-all ${selectedItems.includes(consultant._id) ? 'border-orange-500 ring-2 ring-orange-200 dark:ring-orange-900 bg-orange-50 dark:bg-orange-900/10' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md'}`}
+                   >
+                     <div className="absolute top-4 right-4 z-10">
+                        <input 
+                            type="checkbox"
+                            checked={selectedItems.includes(consultant._id)}
+                            onChange={() => handleSelectItem(consultant._id)}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-5 h-5 cursor-pointer"
+                        />
+                     </div>
+                     <div className="p-6">
+                        <div className="flex items-start justify-between">
+                            <div className="flex items-center gap-4">
+                                <UserCheck className="h-10 w-10 text-orange-500" />
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">{consultant.name}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{consultant.state}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                 </div>
-                 <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex items-center justify-between bg-gray-50 dark:bg-gray-700/50 rounded-b-xl">
-                    <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Joined On</p>
-                        <p className="text-sm font-semibold text-gray-800 dark:text-white">{new Date(consultant.createdAt).toLocaleDateString()}</p>
-                    </div>
-                    <button className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500">
-                        View Profile
-                    </button>
-                 </div>
-               </div>
-             ))}
+                     </div>
+                     <div className="border-t border-gray-200 dark:border-gray-700 px-6 py-3 flex items-center justify-between rounded-b-xl">
+                        <div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Joined On</p>
+                            <p className="text-sm font-semibold text-gray-800 dark:text-white">{new Date(consultant.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        <button className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500">
+                            View Profile
+                        </button>
+                     </div>
+                   </div>
+                 ))}
+             </div>
           </div>
         )}
       </div>

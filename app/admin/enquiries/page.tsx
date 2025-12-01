@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, FormEvent } from 'react'
-import { MoreVertical, Search, Mail, Phone, Eye, MessageSquare, Check, Send } from 'lucide-react'
+import { MoreVertical, Search, Mail, Phone, Eye, MessageSquare, Check, Send, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast';
 import consultationService from '@/services/consultationService';
 import enquiryService from '@/services/enquiryService';
@@ -17,8 +17,23 @@ const statusColors = {
 }
 
 const DetailsModal = ({ request, onClose }: { request: ConsultationRequest; onClose: () => void; }) => ( <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}> <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6" onClick={e => e.stopPropagation()}> <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Consultation Details</h2> <div className="space-y-4 text-sm"> <div> <h3 className="font-semibold text-gray-500">Client Info</h3> <p><strong>Name:</strong> {request.name}</p> <p><strong>Email:</strong> {request.email}</p> <p><strong>Phone:</strong> {request.phone}</p> <p><strong>City:</strong> {request.city}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Request Info</h3> <p><strong>Purpose:</strong> {request.purpose}</p> <p><strong>Property Type:</strong> {request.propertyType}</p> <p><strong>Submitted On:</strong> {new Date(request.createdAt).toLocaleString()}</p> </div> <hr className="dark:border-gray-600"/> <div> <h3 className="font-semibold text-gray-500">Comments</h3> <p className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md whitespace-pre-wrap">{request.comments || 'No comments provided.'}</p> </div> </div> <div className="mt-6 text-right"> <button onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md font-semibold hover:bg-gray-300 dark:hover:bg-gray-500">Close</button> </div> </div> </div> )
-const ReplyModal = ({ request, onClose, onReplySent }: { request: ConsultationRequest; onClose: () => void; onReplySent: (id: string) => void; }) => {
-    const [subject, setSubject] = useState(`Re: Your Vastu Consultation Request`);
+
+const ReplyModal = ({ 
+    target, 
+    type, 
+    onClose, 
+    onReplySent 
+}: { 
+    target: { _id: string; name: string; email: string; subject?: string }; 
+    type: 'consultation' | 'enquiry';
+    onClose: () => void; 
+    onReplySent: (id: string, type: 'consultation' | 'enquiry') => void; 
+}) => {
+    const defaultSubject = type === 'consultation' 
+        ? "Re: Your Vastu Consultation Request"
+        : `Re: ${target.subject || 'Your Enquiry'}`;
+
+    const [subject, setSubject] = useState(defaultSubject);
     const [message, setMessage] = useState('');
     const [isSending, setIsSending] = useState(false);
 
@@ -26,9 +41,14 @@ const ReplyModal = ({ request, onClose, onReplySent }: { request: ConsultationRe
         e.preventDefault();
         setIsSending(true);
         try {
-            await consultationService.replyToRequest(request._id, { subject, message });
+            if (type === 'consultation') {
+                await consultationService.replyToRequest(target._id, { subject, message });
+            } else {
+                await enquiryService.replyToEnquiry(target._id, { subject, message });
+            }
+            
             toast.success("Reply sent successfully!");
-            onReplySent(request._id);
+            onReplySent(target._id, type);
             onClose();
         } catch (error) {
             toast.error("Failed to send reply.");
@@ -37,7 +57,33 @@ const ReplyModal = ({ request, onClose, onReplySent }: { request: ConsultationRe
         }
     };
 
-    return ( <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}> <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6" onClick={e => e.stopPropagation()}> <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Reply to {request.name}</h2> <form onSubmit={handleSend} className="space-y-4"> <div> <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">To:</label> <p className="mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded-md">{request.email}</p> </div> <div> <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subject:</label> <input type="text" id="subject" value={subject} onChange={e => setSubject(e.target.value)} required className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 shadow-sm focus:border-orange-500 focus:ring-orange-500"/> </div> <div> <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message:</label> <textarea id="message" value={message} onChange={e => setMessage(e.target.value)} required rows={8} className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 shadow-sm focus:border-orange-500 focus:ring-orange-500"/> </div> <div className="flex justify-end gap-4"> <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md font-semibold hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button> <button type="submit" disabled={isSending} className="px-4 py-2 flex items-center gap-2 bg-orange-600 text-white rounded-md font-semibold hover:bg-orange-500 disabled:opacity-60"> <Send size={16}/>{isSending ? 'Sending...' : 'Send Reply'} </button> </div> </form> </div> </div> );
+    return ( 
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}> 
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6" onClick={e => e.stopPropagation()}> 
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Reply to {target.name}</h2> 
+                <form onSubmit={handleSend} className="space-y-4"> 
+                    <div> 
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">To:</label> 
+                        <p className="mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded-md">{target.email}</p> 
+                    </div> 
+                    <div> 
+                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Subject:</label> 
+                        <input type="text" id="subject" value={subject} onChange={e => setSubject(e.target.value)} required className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 shadow-sm focus:border-orange-500 focus:ring-orange-500"/> 
+                    </div> 
+                    <div> 
+                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Message:</label> 
+                        <textarea id="message" value={message} onChange={e => setMessage(e.target.value)} required rows={8} className="mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 shadow-sm focus:border-orange-500 focus:ring-orange-500"/> 
+                    </div> 
+                    <div className="flex justify-end gap-4"> 
+                        <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded-md font-semibold hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button> 
+                        <button type="submit" disabled={isSending} className="px-4 py-2 flex items-center gap-2 bg-orange-600 text-white rounded-md font-semibold hover:bg-orange-500 disabled:opacity-60"> 
+                            <Send size={16}/>{isSending ? 'Sending...' : 'Send Reply'} 
+                        </button> 
+                    </div> 
+                </form> 
+            </div> 
+        </div> 
+    );
 };
 
 export default function EnquiriesPage() {
@@ -45,9 +91,13 @@ export default function EnquiriesPage() {
   const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loading, setLoading] = useState(true);
+  
   const [selectedRequest, setSelectedRequest] = useState<ConsultationRequest | null>(null);
-  const [replyRequest, setReplyRequest] = useState<ConsultationRequest | null>(null);
+  const [replyTarget, setReplyTarget] = useState<{ target: any, type: 'consultation' | 'enquiry' } | null>(null);
+  
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const fetchAllData = async () => {
     setLoading(true);
@@ -66,6 +116,10 @@ export default function EnquiriesPage() {
   }
 
   useEffect(() => { fetchAllData() }, []);
+  
+  useEffect(() => {
+      setSelectedItems([]);
+  }, [activeTab]);
 
   const handleEnquiryStatusUpdate = async (id: string, status: 'Contacted' | 'Resolved') => {
       try {
@@ -78,23 +132,93 @@ export default function EnquiriesPage() {
       setOpenMenuId(null);
   }
   
-  const handleReplySent = (id: string) => {
-    setConsultations(prev => prev.map(req => req._id === id ? { ...req, status: 'Contacted' } : req));
+  const handleReplySent = (id: string, type: 'consultation' | 'enquiry') => {
+    if (type === 'consultation') {
+        setConsultations(prev => prev.map(req => req._id === id ? { ...req, status: 'Contacted' } : req));
+    } else {
+        setEnquiries(prev => prev.map(enq => enq._id === id ? { ...enq, status: 'Contacted' } : enq));
+    }
   }
 
   const getWhatsAppLink = (phone: string, name: string) => {
     const prefilledMessage = encodeURIComponent(`Hello ${name}, thank you for your Vastu consultation request. This is from Vastumaye.`);
     return `https://wa.me/${phone.replace(/\D/g, '')}?text=${prefilledMessage}`;
   }
+  
+  const handleSelectAll = () => {
+      if (activeTab === 'Consultation Requests') {
+          if (selectedItems.length === consultations.length) {
+              setSelectedItems([]);
+          } else {
+              setSelectedItems(consultations.map(c => c._id));
+          }
+      } else {
+          if (selectedItems.length === enquiries.length) {
+              setSelectedItems([]);
+          } else {
+              setSelectedItems(enquiries.map(e => e._id));
+          }
+      }
+  }
+
+  const handleSelectItem = (id: string) => {
+      if (selectedItems.includes(id)) {
+          setSelectedItems(selectedItems.filter(item => item !== id));
+      } else {
+          setSelectedItems([...selectedItems, id]);
+      }
+  }
+
+  const handleBulkDelete = async () => {
+      if (!confirm(`Are you sure you want to delete ${selectedItems.length} selected items? This action cannot be undone.`)) return;
+
+      setIsDeleting(true);
+      try {
+          if (activeTab === 'Consultation Requests') {
+              await consultationService.deleteRequests(selectedItems);
+              setConsultations(prev => prev.filter(c => !selectedItems.includes(c._id)));
+              toast.success("Selected consultation requests deleted.");
+          } else {
+              await enquiryService.deleteEnquiries(selectedItems);
+              setEnquiries(prev => prev.filter(e => !selectedItems.includes(e._id)));
+              toast.success("Selected enquiries deleted.");
+          }
+          setSelectedItems([]);
+      } catch (error) {
+          toast.error("Failed to delete selected items.");
+      } finally {
+          setIsDeleting(false);
+      }
+  }
 
   return (
     <div className="space-y-6">
       {selectedRequest && <DetailsModal request={selectedRequest} onClose={() => setSelectedRequest(null)} />}
-      {replyRequest && <ReplyModal request={replyRequest} onClose={() => setReplyRequest(null)} onReplySent={handleReplySent} />}
+      
+      {replyTarget && (
+        <ReplyModal 
+            target={replyTarget.target} 
+            type={replyTarget.type} 
+            onClose={() => setReplyTarget(null)} 
+            onReplySent={handleReplySent} 
+        />
+      )}
 
-      <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Lead & Enquiry Management</h1>
-          <p className="mt-1 text-gray-600 dark:text-gray-400">View and manage all incoming leads from your website.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Lead & Enquiry Management</h1>
+              <p className="mt-1 text-gray-600 dark:text-gray-400">View and manage all incoming leads from your website.</p>
+          </div>
+          {selectedItems.length > 0 && (
+              <button 
+                  onClick={handleBulkDelete} 
+                  disabled={isDeleting}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-500 transition-colors shadow-sm"
+              >
+                  <Trash2 size={18} />
+                  {isDeleting ? 'Deleting...' : `Delete ${selectedItems.length} Selected`}
+              </button>
+          )}
       </div>
 
       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
@@ -115,6 +239,14 @@ export default function EnquiriesPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700/50">
                     <tr>
+                        <th scope="col" className="px-6 py-3">
+                            <input 
+                                type="checkbox" 
+                                checked={consultations.length > 0 && selectedItems.length === consultations.length}
+                                onChange={handleSelectAll}
+                                className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                            />
+                        </th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Client Details</th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Property Type</th>
                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Purpose</th>
@@ -124,9 +256,17 @@ export default function EnquiriesPage() {
                     </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    {loading ? (<tr><td colSpan={6} className="text-center py-10">Loading requests...</td></tr>) : consultations.length === 0 ? (<tr><td colSpan={6} className="text-center py-10">No requests found.</td></tr>) : (
+                    {loading ? (<tr><td colSpan={7} className="text-center py-10">Loading requests...</td></tr>) : consultations.length === 0 ? (<tr><td colSpan={7} className="text-center py-10">No requests found.</td></tr>) : (
                         consultations.map((req) => (
-                        <tr key={req._id}>
+                        <tr key={req._id} className={selectedItems.includes(req._id) ? 'bg-orange-50 dark:bg-orange-900/10' : ''}>
+                            <td className="px-6 py-4">
+                                <input 
+                                    type="checkbox" 
+                                    checked={selectedItems.includes(req._id)}
+                                    onChange={() => handleSelectItem(req._id)}
+                                    className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                                />
+                            </td>
                             <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{req.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{req.email}</div><div className="text-sm text-gray-500 dark:text-gray-400">{req.phone}</div></td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{req.propertyType}</td>
                             <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">{req.purpose}</td>
@@ -137,7 +277,7 @@ export default function EnquiriesPage() {
                                 {openMenuId === req._id && (
                                     <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border dark:border-gray-600">
                                         <button onClick={() => { setSelectedRequest(req); setOpenMenuId(null); }} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"><Eye size={14}/> View Full Details</button>
-                                        <button onClick={() => { setReplyRequest(req); setOpenMenuId(null); }} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"><Mail size={14}/> Reply from Dashboard</button>
+                                        <button onClick={() => { setReplyTarget({ target: req, type: 'consultation' }); setOpenMenuId(null); }} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"><Mail size={14}/> Reply from Dashboard</button>
                                         <a href={getWhatsAppLink(req.phone, req.name)} target="_blank" rel="noopener noreferrer" className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"><MessageSquare size={14}/> Quick Reply on WhatsApp</a>
                                     </div>
                                 )}
@@ -151,6 +291,14 @@ export default function EnquiriesPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
+                  <th scope="col" className="px-6 py-3">
+                        <input 
+                            type="checkbox" 
+                            checked={enquiries.length > 0 && selectedItems.length === enquiries.length}
+                            onChange={handleSelectAll}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                        />
+                  </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Contact Details</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Subject</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
@@ -159,8 +307,16 @@ export default function EnquiriesPage() {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {loading ? (<tr><td colSpan={5} className="text-center py-10">Loading enquiries...</td></tr>) : enquiries.length === 0 ? (<tr><td colSpan={5} className="text-center py-10">No contact enquiries found.</td></tr>) : enquiries.map((enq) => (
-                  <tr key={enq._id}>
+                {loading ? (<tr><td colSpan={6} className="text-center py-10">Loading enquiries...</td></tr>) : enquiries.length === 0 ? (<tr><td colSpan={6} className="text-center py-10">No contact enquiries found.</td></tr>) : enquiries.map((enq) => (
+                  <tr key={enq._id} className={selectedItems.includes(enq._id) ? 'bg-orange-50 dark:bg-orange-900/10' : ''}>
+                    <td className="px-6 py-4">
+                        <input 
+                            type="checkbox" 
+                            checked={selectedItems.includes(enq._id)}
+                            onChange={() => handleSelectItem(enq._id)}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                        />
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{enq.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{enq.email}</div><div className="text-sm text-gray-500 dark:text-gray-400">{enq.phone}</div></td>
                     <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 max-w-sm truncate">{enq.subject}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{new Date(enq.createdAt).toLocaleDateString()}</td>
@@ -169,9 +325,9 @@ export default function EnquiriesPage() {
                       <button onClick={() => setOpenMenuId(openMenuId === enq._id ? null : enq._id)} className="text-gray-500 hover:text-gray-700"><MoreVertical className="h-5 w-5"/></button>
                       {openMenuId === enq._id && (
                         <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 border dark:border-gray-600">
+                            <button onClick={() => { setReplyTarget({ target: enq, type: 'enquiry' }); setOpenMenuId(null); }} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"><Mail size={14}/> Reply from Dashboard</button>
                             {enq.status === 'New' && <button onClick={() => handleEnquiryStatusUpdate(enq._id, 'Contacted')} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"><Check size={14}/> Mark as Contacted</button>}
                             {enq.status !== 'Resolved' && <button onClick={() => handleEnquiryStatusUpdate(enq._id, 'Resolved')} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"><Check size={14}/> Mark as Resolved</button>}
-                            <a href={`mailto:${enq.email}`} className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"><Mail size={14}/> Reply via Email</a>
                         </div>
                       )}
                     </td>

@@ -22,10 +22,15 @@ const updateStatus = (id: string, status: 'Approved' | 'Scheduled') => {
     return apiClient.patch(`/site-visit/status/${id}`, { status });
 };
 
+const deleteApplications = (ids: string[]) => {
+    return apiClient.delete('/site-visit/', { data: { ids } });
+};
+
 const siteVisitService = {
     submitApplication,
     getAllApplications,
     updateStatus,
+    deleteApplications
 };
 
 export default siteVisitService;

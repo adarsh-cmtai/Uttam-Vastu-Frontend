@@ -22,10 +22,15 @@ const updateStatus = (id: string, status: 'Confirmed' | 'Completed') => {
     return apiClient.patch(`/live-session/status/${id}`, { status });
 };
 
+const deleteBookings = (ids: string[]) => {
+    return apiClient.delete('/live-session/', { data: { ids } });
+};
+
 const liveSessionService = {
     submitBooking,
     getAllBookings,
     updateStatus,
+    deleteBookings
 };
 
 export default liveSessionService;

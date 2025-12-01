@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { MoreVertical, Search, Calendar, Check, Clock } from 'lucide-react'
+import { MoreVertical, Search, Calendar, Check, Clock, Trash2 } from 'lucide-react'
 import toast from "react-hot-toast"
 import liveSessionService from '@/services/liveSessionService'
 import siteVisitService from '@/services/siteVisitService'
@@ -27,6 +27,9 @@ export default function StudentTrainingPage() {
   const [loading, setLoading] = useState(true);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const fetchAllData = async () => {
     setLoading(true);
     try {
@@ -44,6 +47,10 @@ export default function StudentTrainingPage() {
   }
 
   useEffect(() => { fetchAllData() }, []);
+  
+  useEffect(() => {
+    setSelectedItems([]);
+  }, [activeTab]);
 
   const handleLiveStatusUpdate = async (id: string, status: 'Confirmed' | 'Completed') => {
       try {
@@ -67,12 +74,71 @@ export default function StudentTrainingPage() {
       setOpenMenuId(null);
   }
 
+  const handleSelectAll = () => {
+    if (activeTab === 'Live Session Bookings') {
+        if (selectedItems.length === bookings.length) {
+            setSelectedItems([]);
+        } else {
+            setSelectedItems(bookings.map(b => b._id));
+        }
+    } else {
+        if (selectedItems.length === siteVisits.length) {
+            setSelectedItems([]);
+        } else {
+            setSelectedItems(siteVisits.map(s => s._id));
+        }
+    }
+  }
+
+  const handleSelectItem = (id: string) => {
+    if (selectedItems.includes(id)) {
+        setSelectedItems(selectedItems.filter(item => item !== id));
+    } else {
+        setSelectedItems([...selectedItems, id]);
+    }
+  }
+
+  const handleBulkDelete = async () => {
+    if (!confirm(`Are you sure you want to delete ${selectedItems.length} selected items? This cannot be undone.`)) return;
+    
+    setIsDeleting(true);
+    try {
+        if (activeTab === 'Live Session Bookings') {
+            await liveSessionService.deleteBookings(selectedItems);
+            setBookings(prev => prev.filter(b => !selectedItems.includes(b._id)));
+            toast.success("Selected bookings deleted.");
+        } else {
+            await siteVisitService.deleteApplications(selectedItems);
+            setSiteVisits(prev => prev.filter(s => !selectedItems.includes(s._id)));
+            toast.success("Selected applications deleted.");
+        }
+        setSelectedItems([]);
+    } catch (error) {
+        toast.error("Failed to delete selected items.");
+    } finally {
+        setIsDeleting(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Student & Training Management</h1>
-        <p className="mt-1 text-gray-600 dark:text-gray-400">Manage all student applications for live sessions and site visits.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Student & Training Management</h1>
+            <p className="mt-1 text-gray-600 dark:text-gray-400">Manage all student applications for live sessions and site visits.</p>
+          </div>
+          {selectedItems.length > 0 && (
+              <button 
+                  onClick={handleBulkDelete} 
+                  disabled={isDeleting}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md font-semibold hover:bg-red-500 transition-colors shadow-sm"
+              >
+                  <Trash2 size={18} />
+                  {isDeleting ? 'Deleting...' : `Delete ${selectedItems.length} Selected`}
+              </button>
+          )}
       </div>
+
       <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
         <div className="p-4 sm:p-6">
             <div className="border-b border-gray-200 dark:border-gray-700">
@@ -90,6 +156,14 @@ export default function StudentTrainingPage() {
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
+                  <th scope="col" className="px-6 py-3">
+                    <input 
+                        type="checkbox" 
+                        checked={bookings.length > 0 && selectedItems.length === bookings.length}
+                        onChange={handleSelectAll}
+                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                    />
+                  </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Student</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Package</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Profile</th>
@@ -100,13 +174,21 @@ export default function StudentTrainingPage() {
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {loading ? (
-                    <tr><td colSpan={6} className="text-center py-10">Loading bookings...</td></tr>
+                    <tr><td colSpan={7} className="text-center py-10">Loading bookings...</td></tr>
                 ) : bookings.length === 0 ? (
-                    <tr><td colSpan={6} className="text-center py-10">No live session bookings found.</td></tr>
+                    <tr><td colSpan={7} className="text-center py-10">No live session bookings found.</td></tr>
                 ) : bookings.map((booking) => {
                   const statusInfo = liveStatusConfig[booking.status];
                   return (
-                    <tr key={booking._id}>
+                    <tr key={booking._id} className={selectedItems.includes(booking._id) ? 'bg-orange-50 dark:bg-orange-900/10' : ''}>
+                      <td className="px-6 py-4">
+                        <input 
+                            type="checkbox" 
+                            checked={selectedItems.includes(booking._id)}
+                            onChange={() => handleSelectItem(booking._id)}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900 dark:text-white">{booking.name}</div>
                           <div className="text-sm text-gray-500 dark:text-gray-400">{booking.contact}</div>
@@ -150,6 +232,14 @@ export default function StudentTrainingPage() {
              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
+                  <th scope="col" className="px-6 py-3">
+                    <input 
+                        type="checkbox" 
+                        checked={siteVisits.length > 0 && selectedItems.length === siteVisits.length}
+                        onChange={handleSelectAll}
+                        className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                    />
+                  </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Applicant</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Package</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Profile</th>
@@ -160,13 +250,21 @@ export default function StudentTrainingPage() {
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {loading ? (
-                    <tr><td colSpan={6} className="text-center py-10">Loading applications...</td></tr>
+                    <tr><td colSpan={7} className="text-center py-10">Loading applications...</td></tr>
                 ) : siteVisits.length === 0 ? (
-                    <tr><td colSpan={6} className="text-center py-10">No site visit applications found.</td></tr>
+                    <tr><td colSpan={7} className="text-center py-10">No site visit applications found.</td></tr>
                 ) : siteVisits.map((app) => {
                   const statusInfo = siteVisitStatusConfig[app.status];
                   return (
-                    <tr key={app._id}>
+                    <tr key={app._id} className={selectedItems.includes(app._id) ? 'bg-orange-50 dark:bg-orange-900/10' : ''}>
+                      <td className="px-6 py-4">
+                        <input 
+                            type="checkbox" 
+                            checked={selectedItems.includes(app._id)}
+                            onChange={() => handleSelectItem(app._id)}
+                            className="rounded border-gray-300 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap"><div className="text-sm font-medium text-gray-900 dark:text-white">{app.name}</div><div className="text-sm text-gray-500 dark:text-gray-400">{app.contact}</div><div className="text-sm text-gray-500 dark:text-gray-400">{app.location}</div></td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{app.chosenPackage}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><div><strong>Qual:</strong> {app.qualifications}</div><div><strong>Exp:</strong> {app.experience}</div></td>

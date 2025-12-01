@@ -21,10 +21,15 @@ const updateStatus = (id: string, status: 'Approved' | 'Rejected') => {
     return apiClient.patch(`/application/status/${id}`, { status });
 };
 
+const deleteApplications = (ids: string[]) => {
+    return apiClient.delete('/application/', { data: { ids } });
+};
+
 const applicationService = {
     submitApplication,
     getAllApplications,
     updateStatus,
+    deleteApplications
 };
 
 export default applicationService;
