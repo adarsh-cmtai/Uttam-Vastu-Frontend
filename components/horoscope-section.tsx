@@ -140,16 +140,16 @@ export default function VastuServicesSection() {
                     {vastuServices[selectedServiceIndex].detail}
                   </p>
 
-                  <div className="mt-8">
+                  <div className="mt-8 flex flex-col sm:flex-row gap-4 w-full">
                     <button 
                         onClick={handleClose}
-                        className="px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        className="px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer w-full sm:w-auto"
                     >
                         {content.btnText}
                     </button>
                     <Link
                         href="/services"
-                        className="ml-2 px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer"
+                        className="px-8 py-3 bg-white text-[#D7281E] font-bold rounded-full shadow-lg hover:bg-stone-100 hover:scale-105 transition-all duration-300 cursor-pointer w-full sm:w-auto text-center"
                     >
                         {content.btnText1}
                     </Link>
