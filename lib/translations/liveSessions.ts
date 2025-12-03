@@ -8,7 +8,7 @@ export const liveSessionsContent = {
             packages: [
               { title: "One Case Study", price: "₹ 1,500", description: "60-min Zoom call" },
               { title: "Three Case Studies", price: "₹ 3,000", description: "Weekend sessions" },
-              { title: "Three Case Studies (Advanced)", price: "₹ 5,000", description: "Weekend sessions" },
+              { title: "Five Case Studies (Advanced)", price: "₹ 5,000", description: "Weekend sessions" },
             ],
             successMessage: "Thank you for booking! We will contact you shortly with the session details.",
             formLabelName: "Full Name",
@@ -31,7 +31,7 @@ export const liveSessionsContent = {
             packages: [
               { title: "एक केस स्टडी", price: "₹ 1,500", description: "60-मिनट की जूम कॉल" },
               { title: "तीन केस स्टडी", price: "₹ 3,000", description: "सप्ताहांत सत्र" },
-              { title: "तीन केस स्टडी (एडवांस्ड)", price: "₹ 5,000", description: "सप्ताहांत सत्र" },
+              { title: "पाँच केस स्टडी (एडवांस्ड)", price: "₹ 5,000", description: "सप्ताहांत सत्र" },
             ],
             successMessage: "बुकिंग के लिए धन्यवाद! हम शीघ्र ही सत्र विवरण के साथ आपसे संपर्क करेंगे।",
             formLabelName: "पूरा नाम",
