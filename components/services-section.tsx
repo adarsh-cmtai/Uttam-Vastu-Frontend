@@ -1,12 +1,22 @@
 "use client"
 
-import React from "react";
-import { motion, Variants } from "framer-motion"
+import React, { useRef, useEffect } from "react";
+import { motion, Variants, useInView } from "framer-motion"
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ServicesSection() {
   const { t } = useLanguage();
   const content = t.authenticServices;
+
+  const containerRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isInView = useInView(containerRef, { amount: 0.6 });
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isInView;
+    }
+  }, [isInView]);
 
   const imageVariants: Variants = { hidden: { opacity: 0, x: -30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } }
   const videoVariants: Variants = { hidden: { opacity: 0, x: 30 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } } }
@@ -40,6 +50,7 @@ export default function ServicesSection() {
           </motion.div>
 
           <motion.div 
+            ref={containerRef}
             className="flex justify-center items-center"
             variants={videoVariants} 
             initial="hidden" 
@@ -48,7 +59,8 @@ export default function ServicesSection() {
           >
             <div className="w-full max-w-xl rounded-2xl overflow-hidden backdrop-blur-sm">
               <video 
-                src="/Vastu Video.mp4" 
+                ref={videoRef}
+                src="/Vastu Video1.mp4" 
                 autoPlay
                 muted 
                 loop  
