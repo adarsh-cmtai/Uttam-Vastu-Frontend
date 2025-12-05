@@ -65,7 +65,7 @@ export default function ServicesSection() {
                 muted 
                 loop  
                 playsInline 
-                className="w-full h-auto max-h-[550px] object-cover block rounded-xl"
+                className="w-full h-auto max-h-[550px] object-contain block rounded-xl"
               />
             </div>
           </motion.div>
