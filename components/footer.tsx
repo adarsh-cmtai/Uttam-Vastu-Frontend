@@ -24,10 +24,10 @@ export default function Footer() {
               {content.description}
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" aria-label="Facebook" className="text-white/80 hover:text-white transition-colors duration-300">
+              <a href="https://www.facebook.com/profile.php?id=61584037084111" aria-label="Facebook" className="text-white/80 hover:text-white transition-colors duration-300">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="#" aria-label="Instagram" className="text-white/80 hover:text-white transition-colors duration-300">
+              <a href="https://www.instagram.com/vastumaye/saved/" aria-label="Instagram" className="text-white/80 hover:text-white transition-colors duration-300">
                 <Instagram className="w-6 h-6" />
               </a>
               <a href="#" aria-label="YouTube" className="text-white/80 hover:text-white transition-colors duration-300">
